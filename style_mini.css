@@ -1,0 +1,96 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+        }
+
+        .top-btn {
+            text-decoration: none;
+            background: white;
+            color: #57aec0;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .form-container {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 45px 35px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 34px;
+            color: #26373b;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #cfd8d5;
+            border-radius: 12px;
+            font-size: 15px;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6db1b4;
+            box-shadow: 0 0 0 4px rgba(61, 95, 83, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #59afc5, #1e7a9c);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .wrapper {
+            width: 420px;
+            padding: 45px 35px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            text-align: center;
+        }

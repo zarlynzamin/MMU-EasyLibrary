@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{category}} Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
+</head>
+<body>
+
+    <h1>{{category}} Books</h1>
+
+    {% if books %}
+        {% for book in books %}
+            <div>
+                <h3>{{book.title}}</h3>
+                <p>Category: {{book.category}}</p>
+            </div>
+        {%endfor%}
+    {%else%}
+        <p>No books found in this category.</p>
+    {%endif}
+
+
+    <br>
+    <a href="/">Back to homepage</a>
+
+<div class="bookshelf">
+
+    <div class="book">
+        <div class="cover">
+            <h3>Harry Potter</h3>
+            <p>Fantasy</p>
+        </div>
+    </div>
+</div>
+
+<div class="book">
+    <div class="cover">
+        <h3>The Hobbit</h3>
+        <p>Fantasy</p>
+    </div>
+</div>
+</div>
+</body>
+</html>

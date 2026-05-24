@@ -9,7 +9,7 @@
 <body>
     <section class="header">
         <nav>
-            <a href="index.html"><img src="{{ url_for('static', filename='images/test1.png') }}"></a>
+            <a href="index.html"><img src="images/test1"></a>
             <div class="nav-links">
                 <ul>
                     <li><a href="">Home</a></li>
@@ -35,14 +35,6 @@
         <div class="cat-row">
             <div class="cat-header">
                 <h2>Book Categories</h2>
-
-                <div class="genres">
-                    <a href="/category?type=Fantasy">Fantasy</a>
-                    <a href="/category?type=Science">Science</a>
-                    <a href="/category?type=History">History</a>
-                    <a href="/category?type=Fiction">Fiction</a>
-                    <a href="/category?type=Novel">Novel</a>
-                </div>
                 <p>“Our system library provides an organized collection of books, allowing users to easily search, view, and access available resources.”</p>
             </div>
 
@@ -51,7 +43,10 @@
                     <div class="book-img">
                         <img src="images/textbook.png" alt="">
                     </div>
-                    <h4>Textbook</h4>
+                    <h4>
+                        <a href="{{ url_for('category_page', type='Textbook') }}">Textbook</a>
+                    </h4>
+
                     <p>A well-organized collection of up-to-date textbooks across various subjects, available in both physical and digital formats for easy search and access.”</p>
                 </div>
 
@@ -59,7 +54,9 @@
                     <div class="book-img">
                         <img src="images/science.png" alt="">
                     </div>
-                    <h4>Science</h4>
+                    <h4>
+                        <a href="{{ url_for('category_page', type='Science') }}">Science</a>
+                    </h4>
                     <p>A comprehensive selection of science books supports users in learning subjects such as physics, biology, and chemistry.</p>
                 </div>
 
@@ -67,7 +64,9 @@
                     <div class="book-img">
                         <img src="images/history.png" alt="">
                     </div>
-                    <h4>History</h4>
+                    <h4>
+                        <a href="{{ url_for('category_page', type='History') }}">History</a>
+                    </h4>
                     <p>A wide range of history books is available in our library system, allowing users to explore past events, cultures, and civilizations.</p>
                 </div>
 
@@ -75,7 +74,9 @@
                     <div class="book-img">
                         <img src="images/fiction.png" alt="">
                     </div>
-                    <h4>Fiction</h4>
+                    <h4>
+                        <a href="{{ url_for('category_page', type='Fiction') }}">Fiction</a>
+                    </h4>
                     <p>A diverse collection of fiction books encourages imagination through creative storytelling and unique themes.</p>
                 </div>
 
@@ -83,7 +84,8 @@
                     <div class="book-img">
                         <img src="images/novel.png" alt="">
                     </div>
-                    <h4>Novel</h4>
+                    <h4>
+                        <a href="{{ url_for('category_page', type='Novel') }}">Novel</a>
                     <p>An extensive variety of novels offers users engaging and immersive reading experiences.</p>
                 </div>
 

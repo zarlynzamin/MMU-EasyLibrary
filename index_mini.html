@@ -1,0 +1,17 @@
+<form method="get">
+    <select name="category">
+        <option value="all">All</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Dystopian Fiction">Dystopian Fiction</option>
+    </select>
+
+
+    <button type="submit" value="Filter"></button>
+</form>
+
+{% for book in books %}
+    <div class="book">
+        <h3>{{ book.title }}</h3>
+        <p>Category: {{ book.category }}</p>
+    </div>
+{% endfor %}

@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
-    <link rel="stylesheet" href="style_project.css">
+    <title>Join Now!</title>
+    <link rel="stylesheet" href="style_mini.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -17,11 +17,15 @@
 <body>
     <div class="top-bar">
         <i class="bx bx-book"></i>
+        <span>MMU EasyLibrary</span>
         <a href="sign_in.html" class="top-btn">Login</a>
     </div>
     <div class="wrapper">
-        <form action="">
-            <h1>Register</h1>
+        <form action="/register" method="POST">
+            <div class="header-box">
+                <h1>Register</h1>
+            </div>    
+            <p class="subtitle">Welcome! Please create an account to start.</p>
             <div class="input-box">
                 <input type="text" placeholder="Username"
                 required>
@@ -33,10 +37,20 @@
                 required>
             </div>
 
+
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
             <br></br>
             <button type="submit" class="btn">Register</button>
 
-            
+            <div class="register-link">
+                <br></br>
+                <p>Already have an account? <a href="sign_in.html">Login</a>
+                </p>
+            </div>
         </form>
     </div>
 </body>

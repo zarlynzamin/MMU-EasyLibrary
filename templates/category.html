@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category }} Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
+</head>
+<body>
+
+    <h1>{{ category }} Books</h1>
+
+   
+
+    <br>
+    <a href="/">Back to homepage</a>
+
+<div class="bookshelf">
+    {% for book in books %}
+        <div class="book">
+            <div class="cover">
+                <h3>
+                    <a href="{{ url_for('book_detail', title=book['title']) }}">{{ book['title'] }}</a>
+                </h3>
+                <p>{{ book['category'] }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

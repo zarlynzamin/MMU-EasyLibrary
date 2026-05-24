@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{{ url_for('static', filename='details.css') }}">
+<head>
+    <title>{{ book.title }}</title>
+</head>
+<body>
+
+    <h1>{{ book.title }}</h1>
+
+    <p><b>Category:</b> {{ book.category }}</p>
+    <p><b>Summary:</b> {{ book.summary }}</p>
+    
+    <button>Borrow Book</button>
+
+    <br><br>
+    <a href="/">Back to homepage</a>
+</body>
+</html>
