@@ -17,12 +17,21 @@ def load_books():
 
     return books
 
-
+#INDEX#
 @app.route("/")
 def homepage():
     return render_template("index.html")
 
 
+
+#RULES#
+@app.route("/rules")
+def rules():
+    return render_template("rules.html")
+
+
+
+#CATEGORY#
 @app.route("/category")
 def category_page():
     selected_category = request.args.get("type")
@@ -41,6 +50,9 @@ def category_page():
          books=filtered_books
     )
 
+
+
+#BOOK DETAILS#
 @app.route("/book/<title>")
 def book_detail(title):
     books = load_books()
@@ -55,6 +67,9 @@ def book_detail(title):
 
     return "Book not found", 404
 
+
+
+#BOOK BORROWING#
 @app.route("/borrow/<title>", methods=["POST"])
 def borrow_book(title):
     borrowed_books = session.get("borrowed_books", [])
@@ -63,9 +78,11 @@ def borrow_book(title):
         borrowed_books.append(title)
     
     session["borrowed_books"] = borrowed_books
-    return redirect(url_for("book_detail", title=title))
+    return redirect(url_for("my_books", title=title))
 
 
+
+#MY BOOKS#
 @app.route("/mybooks")
 def my_books():
     borrowed_books = session.get("borrowed_books", [])

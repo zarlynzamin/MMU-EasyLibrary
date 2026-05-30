@@ -1,0 +1,379 @@
+/* GLOBAL */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:sans-serif;
+}
+
+/* HOME PAGE */
+
+.header{
+    min-height:100vh;
+    width:100%;
+    background-image:linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/books.jpg);
+    background-position:center;
+    background-size:cover;
+    position:relative;
+}
+
+nav{
+    display:flex;
+    padding:2% 6%;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav img{
+    width:150px;
+}
+
+.nav-links{
+    flex:1;
+    text-align:right;
+}
+
+.nav-links ul li{
+    list-style:none;
+    display:inline-block;
+    padding:8px 12px;
+    position:relative;
+}
+
+.nav-links ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.nav-links ul li::after{
+    content:"";
+    width:0%;
+    height:2px;
+    background:plum;
+    display:block;
+    margin:auto;
+    transition:0.5s;
+}
+
+.nav-links ul li:hover::after{
+    width:100%;
+}
+
+.text-box{
+    width:90%;
+    color:white;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+}
+
+.text-box h1{
+    font-size:62px;
+}
+
+.text-box p{
+    margin:10px 0 40px;
+    font-size:14px;
+    color:white;
+}
+
+.hero-btn{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    border:1px solid white;
+    padding:12px 34px;
+    background:transparent;
+}
+
+.hero-btn:hover{
+    border:1px solid plum;
+    background:plum;
+    transition:1s;
+}
+
+/* CATEGORY */
+
+.cat-header{
+    text-align:center;
+    padding:20px 0;
+}
+
+section{
+    width:95%;
+    margin:auto;
+    padding-bottom:100px;
+}
+
+.cat-header h2{
+    font-size:38px;
+    font-family:'Times New Roman',Times,serif;
+}
+
+.cat-books{
+    display:flex;
+    justify-content:space-around;
+    text-align:center;
+    align-items:center;
+    margin-top:20px;
+}
+
+.cat-books .books{
+    width:360px;
+    padding:20px 30px;
+}
+
+.cat-books .books .book-img{
+    background:#e7f0f3ac;
+    padding:18px;
+    border-radius:50%;
+    width:100px;
+    height:100px;
+    position:relative;
+    left:35%;
+}
+
+/* CONTACT */
+
+#contactus{
+    background:#e7f0f3ac;
+    width:100%;
+}
+
+.contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:75%;
+    margin:auto;
+    padding-top:10%;
+    padding-bottom:5%;
+}
+
+.footer{
+    background:white;
+    padding:26px 20px;
+    text-align:center;
+}
+
+/* RULES */
+
+.rules{
+    min-height:100vh;
+    width:100%;
+    background-image:linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/books.jpg);
+    background-position:center;
+    background-size:cover;
+    color:white;
+}
+
+/* REGISTER + LOGIN */
+
+body{
+    font-family:"Montserrat",sans-serif;
+    background:linear-gradient(135deg,rgba(33,83,87,0.8), #e0f7f5);
+    color: #333;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.wrapper{
+    width:420px;
+    padding:50px 45px;
+    background:rgba(133,212,208,0.8);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.05);
+    border-radius:8px;
+}
+
+.subtitle{
+    font-size:18px;
+    color:#4a5a5a;
+    margin-top:-10px;
+    margin-bottom:20px;
+}
+
+.top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:60px;
+    background:#215357;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+}
+
+.top-bar i{
+    font-size:28px;
+    color:white;
+}
+
+.top-bar span{
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.top-btn{
+    color:#215357;
+    text-decoration:none;
+    background:white;
+    padding:6px 16px;
+    border-radius:20px;
+}
+
+.btn{
+    background:#215357;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* PROFILE PAGE */
+
+.profile-body{
+    margin:0;
+    font-family:"Montserrat",sans-serif;
+    background:#eef5f5;
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:250px;
+    height:100vh;
+    background:#215357;
+    position:fixed;
+    left:0;
+    top:0;
+    padding-top:30px;
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:16px 30px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,0.1);
+}
+
+/* MAIN CONTENT */
+
+.main-content{
+    margin-left:250px;
+    width:100%;
+    padding:40px;
+}
+
+.top-section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-bar{
+    width:300px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+/* PROFILE CARD */
+
+.profile-card{
+    background:white;
+    margin-top:30px;
+    border-radius:20px;
+    padding:40px;
+    display:flex;
+    gap:50px;
+    align-items:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.profile-left{
+    text-align:center;
+}
+
+.profile-image{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #215357;
+}
+
+.edit-btn{
+    margin-top:20px;
+    background:#215357;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* USER INFO */
+
+.profile-right{
+    flex:1;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:18px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.info-row span{
+    color:#666;
+}
+
+/* STATS */
+
+.stats{
+    margin-top:30px;
+    display:flex;
+    gap:20px;
+}
+
+.stat-box{
+    flex:1;
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.stat-box h2{
+    color:#215357;
+    font-size:36px;
+}

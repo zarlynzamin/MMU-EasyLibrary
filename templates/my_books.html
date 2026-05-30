@@ -9,7 +9,7 @@
 
 {% if borrowed_books %}
     <ul>
-    {% for book in borrowed_books %}
+    {% for book in books %}
         <li>{{ book.title }} ({{ book.category }})</li>
     {% endfor %}
     </ul>
