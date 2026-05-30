@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books Borrowed</title>
+</head>
+<body>
+
+<h1>My Borrowed Books</h1>
+
+{% if borrowed_books %}
+    <ul>
+    {% for book in borrowed_books %}
+        <li>{{ book.title }} ({{ book.category }})</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have not borrowed any books yet.</p>
+{% endif %}
+
+<a href="/">Back to homepage</a>
+</body>
+</html>

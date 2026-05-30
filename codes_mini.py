@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = "mini_library_secret"
 
 def load_books():
     books = []
@@ -54,6 +55,28 @@ def book_detail(title):
 
     return "Book not found", 404
 
+@app.route("/borrow/<title>", methods=["POST"])
+def borrow_book(title):
+    borrowed_books = session.get("borrowed_books", [])
 
+    if title not in borrowed_books:
+        borrowed_books.append(title)
+    
+    session["borrowed_books"] = borrowed_books
+    return redirect(url_for("book_detail", title=title))
+
+
+@app.route("/mybooks")
+def my_books():
+    borrowed_books = session.get("borrowed_books", [])
+    books = load_books()
+
+    borrowed_book_details = []
+
+    for book in books:
+        if book["title"] in borrowed_books:
+            borrowed_book_details.append(book)
+
+    return render_template("my_books.html", books=borrowed_book_details)
 if __name__ == "__main__":
     app.run(debug=True)
