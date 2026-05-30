@@ -12,10 +12,10 @@
             <a href="index.html"><img src="{{ url_for('static', filename='images/test1.png') }}"></a>
             <div class="nav-links">
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Rules & Regulations</a></li>
-                    <li><a href="">My Books</a></li>
-                    <li><a href="">Profile</a></li>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('rules') }}">Rules & Regulations</a></li>
+                    <li><a href="{{ url_for('my_books') }}">My Books</a></li>
+                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
                 </ul>
             </div>
         </nav>
@@ -24,7 +24,7 @@
         <h1>EasyLibrary</h1>
         <p>At EasyLibrary, we make it easy to discover, borrow and manage books.
         <br>Our goal is to provide a simple and accesible platform for everyone to enjoy reading!</p>
-        <a href="" class="hero-btn">Read More</a>
+        <a href="{{ url_for('index') }}" class="hero-btn">Read More</a>
     </div>
 
     </section>

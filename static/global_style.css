@@ -1,5 +1,5 @@
-/* GLOBAL */
 
+/* GLOBAL */
 *{
     margin:0;
     padding:0;
@@ -45,7 +45,7 @@ nav img{
 }
 
 .nav-links ul li a{
-    color:white;
+    color:var(--white);
     text-decoration:none;
     font-size:13px;
 }
@@ -54,7 +54,7 @@ nav img{
     content:"";
     width:0%;
     height:2px;
-    background:plum;
+    background:var(--primary);
     display:block;
     margin:auto;
     transition:0.5s;
@@ -66,7 +66,7 @@ nav img{
 
 .text-box{
     width:90%;
-    color:white;
+    color:var(--white);
     position:absolute;
     top:50%;
     left:50%;
@@ -81,21 +81,21 @@ nav img{
 .text-box p{
     margin:10px 0 40px;
     font-size:14px;
-    color:white;
+    color:var(--white);
 }
 
 .hero-btn{
     display:inline-block;
     text-decoration:none;
-    color:white;
-    border:1px solid white;
+    color:var(--white);
+    border:1px solid var(--white);
     padding:12px 34px;
     background:transparent;
 }
 
 .hero-btn:hover{
-    border:1px solid plum;
-    background:plum;
+    border:1px solid var(--primary);
+    background:var(--primary);
     transition:1s;
 }
 
@@ -171,7 +171,7 @@ section{
     background-image:linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/books.jpg);
     background-position:center;
     background-size:cover;
-    color:white;
+    color:var(--white);
 }
 
 /* REGISTER + LOGIN */
@@ -179,7 +179,7 @@ section{
 body{
     font-family:"Montserrat",sans-serif;
     background:linear-gradient(135deg,rgba(33,83,87,0.8), #e0f7f5);
-    color: #333;
+    color: var(--text);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -227,16 +227,16 @@ body{
 }
 
 .top-btn{
-    color:#215357;
+    color:var(--text);
     text-decoration:none;
-    background:white;
+    background:var(--white);
     padding:6px 16px;
     border-radius:20px;
 }
 
 .btn{
-    background:#215357;
-    color:white;
+    background:var(--text);
+    color:var(--white);
     border:none;
     padding:10px 20px;
     border-radius:5px;
@@ -248,7 +248,7 @@ body{
 .profile-body{
     margin:0;
     font-family:"Montserrat",sans-serif;
-    background:#eef5f5;
+    background:var(--background);
     display:flex;
 }
 
@@ -257,7 +257,7 @@ body{
 .sidebar{
     width:250px;
     height:100vh;
-    background:#215357;
+    background:var(--text);
     position:fixed;
     left:0;
     top:0;
@@ -265,14 +265,14 @@ body{
 }
 
 .sidebar h2{
-    color:white;
+    color:var(--white);
     text-align:center;
     margin-bottom:40px;
 }
 
 .sidebar a{
     display:block;
-    color:white;
+    color:var(--white);
     text-decoration:none;
     padding:16px 30px;
     transition:0.3s;

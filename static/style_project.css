@@ -1,3 +1,11 @@
+:root {
+    --primary: #F4C542;      /* Main yellow */
+    --secondary: #FFE08A;    /* Light yellow */
+    --background: #FFF9E6;   /* Cream */
+    --text: #4A3B1A;         /* Dark brown */
+    --white: #FFFFFF;
+}
+
 body {
     
   font-family: "Montserrat", sans-serif;

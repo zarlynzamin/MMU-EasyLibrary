@@ -1,0 +1,62 @@
+:root {
+    --primary: #F4C542;      /* Main yellow */
+    --secondary: #FFE08A;    /* Light yellow */
+    --background: #FFF9E6;   /* Cream */
+    --text: #4A3B1A;         
+    --white: #FFFFFF;
+}
+
+body {
+    background-color: #FFF9E6;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 40px;
+}
+
+h1 {
+    color: #4A3B1A;
+    font-size: 42px;
+    margin-bottom: 30px;
+}
+
+.books-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.book-card {
+    background: white;
+    border-left: 8px solid #F4C542;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.book-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4A3B1A;
+}
+
+.book-category {
+    color: #666;
+    margin-top: 5px;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #F4C542;
+    color: #4A3B1A;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background-color: #E6B800;
+}
