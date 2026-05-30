@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=device-width, initial scale=1.0">
+    <title>EasyLibrary</title>    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="images/test1"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/rules">Rules & Regulations</a></li>
+                    <li><a href="/mybooks">My Books</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                </ul>
+            </div>
+        </nav>
+
+    <div class="text-box">
+        <h1>EasyLibrary</h1>
+        <p>At EasyLibrary, we make it easy to discover, borrow and manage books.
+        <br>Our goal is to provide a simple and accesible platform for everyone to enjoy reading!</p>
+        <a href="" class="hero-btn">Read More</a>
+    </div>
+
+    </section>
+
+    <!----categories section---->
+
+    <section class="categories">
+        <div class="cat-row">
+            <div class="cat-header">
+                <h2>Book Categories</h2>
+                <p>“Our system library provides an organized collection of books, allowing users to easily search, view, and access available resources.”</p>
+            </div>
+
+            <div class="cat-books">
+                <div class="books">
+                    <div class="book-img">
+                        <img src="static/images/textbook.png" alt="">
+                    </div>
+                    <h4>Textbook</h4>
+                    <p>A well-organized collection of up-to-date textbooks across various subjects, available in both physical and digital formats for easy search and access.”</p>
+                </div>
+
+                <div class="books">
+                    <div class="book-img">
+                        <img src="static/images/science.png" alt="">
+                    </div>
+                    <h4>Science</h4>
+                    <p>A comprehensive selection of science books supports users in learning subjects such as physics, biology, and chemistry.</p>
+                </div>
+
+                <div class="books">
+                    <div class="book-img">
+                        <img src="static/images/history.png" alt="">
+                    </div>
+                    <h4>History</h4>
+                    <p>A wide range of history books is available in our library system, allowing users to explore past events, cultures, and civilizations.</p>
+                </div>
+
+                <div class="books">
+                    <div class="book-img">
+                        <img src="static/images/fiction.png" alt="">
+                    </div>
+                    <h4>Fiction</h4>
+                    <p>A diverse collection of fiction books encourages imagination through creative storytelling and unique themes.</p>
+                </div>
+
+                <div class="books">
+                    <div class="book-img">
+                        <img src=static/images/novel.png" alt="">
+                    </div>
+                    <h4>Novel</h4>
+                    <p>An extensive variety of novels offers users engaging and immersive reading experiences.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--- contact section -->
+
+    <section id="contactus">
+        <div class="contact-row">
+            <div class="col">
+                <h2>Contact Us</h2>
+
+                <form action="">
+                    <input type="text" placeholder="Name">
+                    <br>
+                    <input type="text" placeholder="Email">
+                    <br>
+                    <input type="text" placeholder="Phone Number">
+                    <br>
+                    <textarea cols="20" rows="5" placeholder="Message"></textarea>
+                    <br>
+                    <input type="submit" value="SEND">
+                </form>
+            </div>
+
+            <div class="col">
+                <img src="static/images/contact.png" alt="">
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <div class="footer">
+            <p>@2026 All Rights Reserved by MMU EasyLibrary</p>
+        </div>
+    </div>
+
+</body>
+</html>
