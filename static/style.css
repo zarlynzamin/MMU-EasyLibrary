@@ -120,7 +120,7 @@ nav img{
     padding: 20px 0;
 }
 
-section{
+.categories{
     width: 95%;
     margin: auto;
     padding-bottom: 100px;
@@ -226,9 +226,9 @@ textarea::placeholder{
 }
 
 .contact-row form input[type="submit"]:hover{
-    border: 1px solid #0b910b;
-    color: #0b910b;
-    background: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    background: var(--white);
 }
 
 .contact-row .col img{
@@ -248,6 +248,8 @@ textarea::placeholder{
     text-align: center;
     font-size: 15px;
 }
+
+/* R&R PAGE */
 
 .rules{
     min-height: 100vh;
@@ -376,4 +378,34 @@ textarea::placeholder{
     border-radius: 8px;
     width: 250px;
     text-align: right;
+}
+
+/* ADMIN PAGE */
+
+.admin-card{
+    margin-top:30px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.admin-card table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.admin-card th{
+    background:var(--primary);
+    color:var(--text);
+    padding:15px;
+}
+
+.admin-card td{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+.admin-card tr:hover{
+    background:#FFF4C2;
 }

@@ -10,6 +10,7 @@ def create_database():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    #Users table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,6 +19,17 @@ def create_database():
         password TEXT
     )
     """)
+
+    #Borrowed books table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS borrowed_books(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        book_title TEXT,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    """)
+
 
     conn.commit()
     conn.close()
@@ -62,13 +74,28 @@ def rules():
 
 @app.route("/mybooks")
 def my_books():
-    borrowed_books = session.get("borrowed_books", [])
-    books = load_books()
 
+    if "user_id" not in session:
+        return redirect(url_for("sign_in"))
+
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT book_title
+    FROM borrowed_books
+    WHERE user_id=?
+    """, (session["user_id"],))
+
+    borrowed_titles = [row[0] for row in cursor.fetchall()]
+
+    conn.close()
+
+    books = load_books()
     borrowed_book_details = []
 
     for book in books:
-        if book["title"] in borrowed_books:
+        if book["title"] in borrowed_titles:
             borrowed_book_details.append(book)
 
     return render_template("my_books.html", books=borrowed_book_details)
@@ -126,15 +153,22 @@ def book_detail(title):
 
     return "Book not found", 404
 
-
 @app.route("/borrow/<title>", methods=["POST"])
 def borrow_book(title):
-    borrowed_books = session.get("borrowed_books", [])
 
-    if title not in borrowed_books:
-        borrowed_books.append(title)
+    if "user_id" not in session:
+        return redirect(url_for("sign_in"))
 
-    session["borrowed_books"] = borrowed_books
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO borrowed_books(user_id, book_title)
+    VALUES (?, ?)
+    """, (session["user_id"], title))
+
+    conn.commit()
+    conn.close()
 
     return redirect(url_for("my_books"))
 
@@ -210,6 +244,43 @@ def update_profile():
     conn.close()
 
     return redirect(url_for("profile"))
+
+# ---------- ADMIN ----------
+@app.route("/admin")
+def admin():
+
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT
+        users.username,
+        users.email,
+        borrowed_books.book_title
+    FROM borrowed_books
+    JOIN users
+    ON borrowed_books.user_id = users.id
+    """)
+
+    records = cursor.fetchall()
+
+    cursor.execute("SELECT COUNT(*) FROM users")
+    total_users = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM borrowed_books")
+    borrowed_count = cursor.fetchone()[0]
+
+    total_books = len(load_books())
+
+    conn.close()
+
+    return render_template(
+        "admin.html",
+        records=records,
+        total_users=total_users,
+        total_books=total_books,
+        borrowed_count=borrowed_count
+    )
 
 
 # ---------- LOGOUT ----------

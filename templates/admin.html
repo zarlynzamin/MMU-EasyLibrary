@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="profile-body">
+
+<nav class="profile-navbar">
+    <a href="/index">
+        <img src="{{ url_for('static', filename='images/logo.png') }}">
+    </a>
+
+    <div class="nav-links">
+        <ul>
+            <li><a href="/index">HOME</a></li>
+            <li><a href="/rules">RULES</a></li>
+            <li><a href="/admin">ADMIN</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main-content">
+    <div class="top-section">
+        <h1>Admin Dashboard</h1>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <h2>{{ total_users }}</h2>
+            <p>Total Users</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{{ total_books }}</h2>
+            <p>Total Books</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{{ borrowed_count }}</h2>
+            <p>Borrowed Books</p>
+        </div>
+
+    </div>
+
+    <div class="admin-card">
+        <h2>Borrow Records</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Book Title</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in records %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
