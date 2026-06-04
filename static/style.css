@@ -186,77 +186,14 @@ section{
     padding-top: 10px;
 }
 
-/*--- contact section ---*/
-
-#contactus{
-    background: #e7f0f3ac;
-    width: 100%;
-}
-
-.contact-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 75%;
-    margin: auto;
-    padding-top: 10%;
-    padding-bottom: 5%;
-}
-
-.contact-row form{
-    width: 450px;
-    padding: 12px 0;
-}
-
-.contact-row form input, textarea{
-    width: 100%;
-    height: 40px;
-    margin-top: 20px;
-    padding: 6px 0;
-    text-indent: 10px;
-    font-size: 18px;
-    background-color: #e7f0f3ac;
-}
-
-.contact-row form input::placeholder, 
-textarea::placeholder{
-    color: #000;
-}
-
-.contact-row form input[type="submit"]{
-    text-align: center;
-    height: 50px;
-    cursor: pointer;
-    background-color: #0b910b;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    outline: none;
-}
-
-.contact-row form input[type="submit"]:hover{
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    background: var(--white);
-}
-
-.contact-row .col img{
-    width: 400px;
-    height: auto;
-    padding-left: 50px;
-}
-
-.contact-row .col h2{
-    font-size: 24px;
-    font-weight: 600;
-}
-
 .footer{
     background: #fff;
     padding: 26px 20px;
     text-align: center;
     font-size: 15px;
 }
+
+/* R&R PAGE */
 
 .rules{
     min-height: 100vh;
@@ -385,4 +322,34 @@ textarea::placeholder{
     border-radius: 8px;
     width: 250px;
     text-align: right;
+}
+
+/* ADMIN PAGE */
+
+.admin-card{
+    margin-top:30px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.admin-card table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.admin-card th{
+    background:var(--primary);
+    color:var(--text);
+    padding:15px;
+}
+
+.admin-card td{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+.admin-card tr:hover{
+    background:#FFF4C2;
 }
