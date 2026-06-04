@@ -1,18 +1,17 @@
 <h1>My Borrowed Books</h1>
 <link rel="stylesheet" href="{{ url_for('static', filename='my_books.css') }}">
-{% if books %}
-    <h2>You are borrowing {{ books|length }} book(s)</h2>
+<h2>You are borrowing {{ books|length }} book(s)</h2>
 
-    <div class="books-container">
-        {% for book in books %}
-            <div class="book-card">
-                <h3>{{ book.title }}</h3>
-                <p><b>Category:</b> {{ book.category }}</p>
-            </div>
-        {% endfor %}
-    </div>
+{% if books %}
+    {% for book in books %}
+        <div class="book-card">
+            <h3>{{ book.title }}</h3>
+            <p><b>Category:</b> {{ book.category }}</p>
+            <p><b>Borrowed on:</b> {{ book.borrow_date }}</p>
+            <p><b>Due date:</b> {{ book.due_date }}</p>
+        </div>
+    {% endfor %}
 {% else %}
-    <h2>You are borrowing 0 books</h2>
     <p>You have not borrowed any books yet.</p>
 {% endif %}
 

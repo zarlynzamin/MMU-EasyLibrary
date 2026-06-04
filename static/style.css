@@ -1,12 +1,3 @@
-
-:root {
-    --primary: #F4C542;
-    --secondary: #FFE08A;
-    --background: #FFF9E6;
-    --text: #4A3B1A;
-    --white: #FFFFFF;
-}
-
 *{
     margin: 0;
     padding: 0;
@@ -55,7 +46,7 @@ nav img{
     content: '';
     width: 0%;
     height: 2px;
-    background: var(--primary);
+    background: plum;
     display: block;
     margin: auto;
     transition: 0.5s;
@@ -99,8 +90,8 @@ nav img{
 }
 
 .hero-btn:hover{
-    border: 1px solid var(--primary);
-    background: var(--primary);
+    border: 1px solid plum;
+    background: plum;
     transition: 1s;
 }
 
@@ -113,7 +104,7 @@ nav img{
     }
     .nav-links{
         position: absolute;
-        background: var(--primary);
+        background: plum;
         height: 100vh;
         width: 200px;
         top: 0;
@@ -235,9 +226,9 @@ textarea::placeholder{
 }
 
 .contact-row form input[type="submit"]:hover{
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    background: var(--white);
+    border: 1px solid #0b910b;
+    color: #0b910b;
+    background: #fff;
 }
 
 .contact-row .col img{
