@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Register Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_style.css' ) }}">
+</head>
+
+<body class="profile-body">
+
+
+    <div class="main-content admin-register">
+        <div class ="admin-card">
+            <form action="/admin/register" method="post">
+                <h1>Admin Register</h1>
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Username"
+                    required>
+                </div>
+
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email"
+                required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password"
+                required>
+            </div>
+
+            <br></br>
+            <button type="submit" class="btn">Register</button>
+
+            <p>Already admin? <a href="/admin/login" class="btn">Login Here</a></p>
+        </form>
+    </div>
+</body>
+</html>

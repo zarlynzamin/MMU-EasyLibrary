@@ -19,6 +19,7 @@
             <li><a href="/index">HOME</a></li>
             <li><a href="/rules">RULES</a></li>
             <li><a href="/admin">ADMIN</a></li>
+            <li><a href="/admin/logout">LOGOUT</a></li>
         </ul>
     </div>
 </nav>
@@ -45,7 +46,26 @@
         </div>
 
     </div>
+        <div class="admin-card">
+        
+            <h2>Add New Book</h2>
 
+            <form action="{{ url_for('add_book') }}" method="post">
+                <input type="text" name="title" placeholder="Book Title" required>
+
+                <select name="category" required>
+                    <option value="Science">Science</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Fantasy">Fantasy</option>
+                </select>
+
+                <textarea name="summary" placeholder="Book Summary" required></textarea>
+
+                <button type="submit" class="btn">Add Book</button>
+            </form>
+</div>
+</div>
     <div class="admin-card">
         <h2>Borrow Records</h2>
 

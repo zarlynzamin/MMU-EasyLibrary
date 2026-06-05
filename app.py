@@ -30,6 +30,15 @@ def create_database():
     )
     """)
 
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS admins(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    email TEXT,
+    password TEXT
+)
+""")
+
 
     conn.commit()
     conn.close()
@@ -282,6 +291,49 @@ def admin():
         borrowed_count=borrowed_count
     )
 
+# ---------- ADMIN REGISTER ----------
+@app.route("/admin/register", methods=["GET", "POST"])
+def admin_register():
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        # For now, admin is stored in session only
+        session["admin_logged_in"] = True
+        session["admin_username"] = username
+
+        return redirect(url_for("admin"))
+
+    return render_template("admin_register.html")
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        SELECT * FROM admins
+        WHERE email=? AND password=?
+        """, (email, password))
+
+        admin = cursor.fetchone()
+
+        conn.close()
+
+        if admin:
+            session["admin_id"] = admin[0]
+            return redirect(url_for("admin"))
+
+        return "Invalid admin login"
+
+    return render_template("admin_login.html")
 
 # ---------- LOGOUT ----------
 @app.route("/logout")

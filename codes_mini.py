@@ -1,8 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "mini_library_secret"
+def create_database():
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS admins(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        email TEXT,
+        password TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+create_database()
 
 def load_books():
     books = []
@@ -122,6 +140,104 @@ def my_books():
 
     return render_template("my_books.html", books=borrowed_book_details)
 
+
+# ADMIN REGSISTRATION #
+
+@app.route("/admin/register", methods=["GET", "POST"])
+def admin_register():
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        INSERT INTO admins(username, email, password)
+        VALUES (?, ?, ?)
+        """, (username, email, password))
+
+        conn.commit()
+        conn.close()
+
+        session["admin_logged_in"] = True
+        return redirect(url_for("admin_page"))
+
+    return render_template("admin_register.html")
+
+
+# ADMIN LOGIN
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        SELECT * FROM admins
+        WHERE email=? AND password=?
+        """, (email, password))
+
+        admin = cursor.fetchone()
+        conn.close()
+
+        if admin:
+            session["admin_logged_in"] = True
+            return redirect(url_for("admin_page"))
+
+        return "Invalid admin email or password", 401
+
+    return render_template("admin_login.html")
+
+# ADMIN PAGE #
+@app.route("/admin")
+def admin_page():
+    if "admin_logged_in" not in session:
+        return redirect(url_for("admin_login"))
+    
+    books = load_books()
+
+
+    total_users = 0
+    total_books = len(books)
+    borrowed_books = session.get("borrowed_books", [])
+    records = []
+
+    return render_template("admin.html",
+    books=books,
+    total_users=total_users,
+    total_books=total_books,
+    borrowed_count=len(borrowed_books),
+    records=records
+)
+
+#ADMIN LOGOUT#
+@app.route("/admin/logout")
+def admin_logout():
+    session.pop("admin_logged_in", None)
+    return redirect(url_for("admin_login"))
+
+#ADD BOOK#
+@app.route("/admin/add", methods=["GET", "POST"])
+def add_book():
+    if "admin_logged_in" not in session:
+        return redirect(url_for("admin_login"))
+
+    if request.method == "POST":
+        title = request.form["title"].strip()
+        category = request.form["category"].strip()
+        summary = request.form["summary"].strip()
+
+        with open("book.txt", "a") as file:
+            file.write(f"\n{title}|{category}|{summary}")
+
+        return redirect(url_for("category_page", type=category))
+
+    return render_template("add_book.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

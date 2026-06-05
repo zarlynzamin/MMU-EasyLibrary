@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_project.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,32 +15,49 @@
 </head>
 
 <body>
+    <a href="/admin/register" class="admin-btn">Admin</a>
     <div class="top-bar">
         <i class="bx bx-book"></i>
+        <span>MMU EasyLibrary</span>
         <a href="/sign_in" class="top-btn">Login</a>
     </div>
-    <div class="wrapper">
-        <form action="/register" method="post">
-            <h1>Register</h1>
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username"
-                required>
-            </div>
 
+    <div class ="top-buttons">
+        
+
+        {% if session.get('admin_id') %}
+            <a href="/logout" class="top-btn">Logout</a>
+        {% endif %}
+
+    </div>
+    <div class="wrapper">
+        <form action="/sign_in" method="post">
+            <h1>Register</h1>
+            <p class="subtitle">Welcome! Please fill in below.</p>
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email"
                 required>
             </div>
+
 
             <div class="input-box">
                 <input type="password" name="password" placeholder="Password"
                 required>
             </div>
 
+
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
             <br></br>
             <button type="submit" class="btn">Register</button>
 
-            
+            <div class="register-link">
+                <p>Already have an account? <a href="/sign_in">Login</a>
+                </p>
+            </div>
         </form>
     </div>
 </body>
