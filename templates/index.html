@@ -12,7 +12,7 @@
             <a href="index.html"><img src="{{ url_for('static', filename='images/test1.png') }}"></a>
             <div class="nav-links">
                 <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('homepage') }}">Home</a></li>
                     <li><a href="{{ url_for('rules') }}">Rules & Regulations</a></li>
                     <li><a href="{{ url_for('my_books') }}">My Books</a></li>
                     <li><a href="{{ url_for('profile') }}">Profile</a></li>
@@ -24,7 +24,7 @@
         <h1>EasyLibrary</h1>
         <p>At EasyLibrary, we make it easy to discover, borrow and manage books.
         <br>Our goal is to provide a simple and accesible platform for everyone to enjoy reading!</p>
-        <a href="{{ url_for('index') }}" class="hero-btn">Read More</a>
+        <a href="{{ url_for('homepage') }}" class="hero-btn">Read More</a>
     </div>
 
     </section>
@@ -36,86 +36,59 @@
             <div class="cat-header">
                 <h2>Book Categories</h2>
 
-                <div class="genres">
-                    <a href="/category?type=Fantasy">Fantasy</a>
-                    <a href="/category?type=Science">Science</a>
-                    <a href="/category?type=History">History</a>
-                    <a href="/category?type=Fiction">Fiction</a>
-                    <a href="/category?type=Novel">Novel</a>
-                </div>
+                
                 <p>“Our system library provides an organized collection of books, allowing users to easily search, view, and access available resources.”</p>
             </div>
 
             <div class="cat-books">
-                <div class="books">
-                    <div class="book-img">
-                        <img src="images/textbook.png" alt="">
-                    </div>
-                    <h4>Textbook</h4>
-                    <p>A well-organized collection of up-to-date textbooks across various subjects, available in both physical and digital formats for easy search and access.”</p>
-                </div>
 
-                <div class="books">
-                    <div class="book-img">
-                        <img src="images/science.png" alt="">
-                    </div>
-                    <h4>Science</h4>
-                    <p>A comprehensive selection of science books supports users in learning subjects such as physics, biology, and chemistry.</p>
-                </div>
+    <a href="/category?type=Science" class="book-link">
+        <div class="books">
+            <div class="book-img">
+                <img src="{{ url_for('static', filename='images/science.png') }}">
+            </div>
+            <h4>Science</h4>
+            <p>Science books that support learning in physics, biology and chemistry.</p>
+        </div>
+    </a>
 
-                <div class="books">
-                    <div class="book-img">
-                        <img src="images/history.png" alt="">
-                    </div>
-                    <h4>History</h4>
-                    <p>A wide range of history books is available in our library system, allowing users to explore past events, cultures, and civilizations.</p>
-                </div>
+    <a href="/category?type=History" class="book-link">
+        <div class="books">
+            <div class="book-img">
+                <img src="{{ url_for('static', filename='images/history.png') }}">
+            </div>
+            <h4>History</h4>
+            <p>Explore historical events, cultures and civilizations.</p>
+        </div>
+    </a>
 
-                <div class="books">
-                    <div class="book-img">
-                        <img src="images/fiction.png" alt="">
-                    </div>
-                    <h4>Fiction</h4>
-                    <p>A diverse collection of fiction books encourages imagination through creative storytelling and unique themes.</p>
-                </div>
+    <a href="/category?type=Fiction" class="book-link">
+        <div class="books">
+            <div class="book-img">
+                <img src="{{ url_for('static', filename='images/fiction.png') }}">
+            </div>
+            <h4>Fiction</h4>
+            <p>Creative stories filled with imagination and adventure.</p>
+        </div>
+    </a>
 
-                <div class="books">
-                    <div class="book-img">
-                        <img src="images/novel.png" alt="">
-                    </div>
-                    <h4>Novel</h4>
-                    <p>An extensive variety of novels offers users engaging and immersive reading experiences.</p>
-                </div>
+    <a href="/category?type=Textbook" class="book-link">
+        <div class="books">
+            <div class="book-img">
+                <img src="{{ url_for('static', filename='images/textbook.png') }}">
+            </div>
+            <h4>Textbook</h4>
+            <p>Educational books for students and teachers.</p>
+        </div>
+    </a>
+
+</div>
 
             </div>
         </div>
     </section>
 
-    <!--- contact section -->
-
-    <section id="contactus">
-        <div class="contact-row">
-            <div class="col">
-                <h2>Contact Us</h2>
-
-                <form action="">
-                    <input type="text" placeholder="Name">
-                    <br>
-                    <input type="text" placeholder="Email">
-                    <br>
-                    <input type="text" placeholder="Phone Number">
-                    <br>
-                    <textarea cols="20" rows="5" placeholder="Message"></textarea>
-                    <br>
-                    <input type="submit" value="SEND">
-                </form>
-            </div>
-
-            <div class="col">
-                <img src="./images/contact.png" alt="">
-            </div>
-        </div>
-    </section>
+    
 
     <div class="footer">
         <div class="footer">

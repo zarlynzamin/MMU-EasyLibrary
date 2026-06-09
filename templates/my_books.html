@@ -9,10 +9,14 @@
             <p><b>Category:</b> {{ book.category }}</p>
             <p><b>Borrowed on:</b> {{ book.borrow_date }}</p>
             <p><b>Due date:</b> {{ book.due_date }}</p>
+
+            <form action="{{ url_for('return_book', title=book.title) }}" method="post">
+                <button type="submit" class="btn">Return Book</button>
+            </form>
         </div>
     {% endfor %}
 {% else %}
     <p>You have not borrowed any books yet.</p>
 {% endif %}
 
-<a href="/" class="back-btn">Back to homepage</a>
+<a href="/index" class="back-btn">Back to homepage</a>
