@@ -360,6 +360,12 @@ def sign_in():
 
     return render_template("sign_in.html")
 
+#LOGOUT#
+@app.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    return redirect(url_for("register"))
+
 print(app.url_map)
 
 if __name__ == "__main__":

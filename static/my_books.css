@@ -6,18 +6,22 @@
     --white: #FFFFFF;
 }
 
+
+
 body {
     background-color: #FFF9E6;
-    font-family: Arial, sans-serif;
+    font-family: "Montserrat", sans-serif;
     text-align: center;
     margin: 0;
     padding: 40px;
+    
 }
 
 h1 {
     color: #4A3B1A;
     font-size: 42px;
     margin-bottom: 30px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .books-container {
