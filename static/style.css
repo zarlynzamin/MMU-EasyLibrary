@@ -142,7 +142,7 @@ nav img {
     color: var(--text);
 }
 
-/* remove top blue genre links if still in HTML */
+
 .genres {
     display: none;
 }
