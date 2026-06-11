@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About EasyLibrary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="profile-body">
+
+    <nav class="profile-navbar">
+        <div class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('rules') }}">Rules & Regulations</a></li>
+                <li><a href="{{ url_for('my_books') }}">My Books</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="about-card">
+            <div class="about-header">
+                <h1>📚 About EasyLibrary</h1>
+                <p>Your Digital Gateway to Knowledge</p>
+            </div>
+
+            <div class="about-section">
+                <h2>Our Story</h2>
+
+                <p>
+                    EasyLibrary was developed to provide a simple and convenient
+                    way for users to access library resources online. Traditional
+                    library systems often require users to search for books manually
+                    and manage borrowing records through physical processes.
+                </p>
+
+                <p>
+                    To improve this experience, EasyLibrary offers a user-friendly
+                    digital platform where users can browse categories, borrow books,
+                    track their borrowed items, and manage their profiles with ease.
+                </p>
+
+                <p>
+                    Our goal is to encourage reading and make knowledge more accessible
+                    by providing a modern and efficient library management system.
+                </p>
+            </div>
+
+            <div class="about-section">
+                <h2>How to Use EasyLibrary</h2>
+
+                <div class="steps">
+                    <div class="step-box">
+                        <span>1</span>
+                        Browse book categories on the Home page.
+                    </div>
+
+                    <div class="step-box">
+                        <span>2</span>
+                        Select a category and explore available books.
+                    </div>
+
+                    <div class="step-box">
+                        <span>3</span>
+                        Click the Borrow button to borrow a book.
+                    </div>
+
+                    <div class="step-box">
+                        <span>4</span>
+                        Visit My Books to view your borrowed books.
+                    </div>
+
+                    <div class="step-box">
+                        <span>5</span>
+                        Manage your information through the Profile page.
+                    </div>
+
+                    <div class="step-box">
+                        <span>6</span>
+                        Follow the Rules & Regulations for borrowing policies.
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-home">
+                <a href="{{ url_for('index') }}" class="hero-btn">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

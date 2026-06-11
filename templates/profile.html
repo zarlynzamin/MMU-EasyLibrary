@@ -44,20 +44,25 @@
             </div>
         </div>
 
-        
-
         <div class="profile-card">
             <div class="profile-left">
-                <img src="https://i.imgur.com/6VBx3io.png"
+                <img src="{{ profile_picture }}"
                      class="profile-image">
-                <br>
 
-                <button
-                     type="button"
-                     class="edit-btn"
-                     id="editBtn">
-                    Edit Profile
-                </button>
+                <form action="/upload-picture"
+                      method="post"
+                      enctype="multipart/form-data">
+                    
+                    <input type="file"
+                           name="picture"
+                           accept="image/*">
+
+                    <button type="submit"
+                            class="edit-btn">
+                            Upload Picture
+                        </button>
+                </form>
+                <br>
 
             </div>
 
@@ -79,17 +84,21 @@
 
                 <div class="info-row">
                     <span>Member Since</span>
-                    <strong>2026</strong>
+                    <strong>{{ member_since }}</strong>
                 </div>
 
                 <div class="info-row">
                     <span>Books Borrowed</span>
-                    <strong>12</strong>
+                    <strong>{{ borrowed_count }}</strong>
                 </div>
 
                 <div class="info-row">
                     <span>Favorite Genre</span>
-                    <strong>Fantasy</strong>
+                    <input 
+                       type="text"
+                       name="favorite_genre"
+                       value="{{ favorite_genre }}"
+                       placeholder="Enter favorite genre">
                 </div>
 
                 <button type="submit"
@@ -104,17 +113,17 @@
 
         <div class="stats">
             <div class="stat-box">
-                <h2>12</h2>
+                <h2>{{ borrowed_count }}</h2>
                 <p>Borrowed Books</p>
             </div>
 
             <div class="stat-box">
-                <h2>7</h2>
+                <h2>{{ returned_count }}</h2>
                 <p>Returned Books</p>
             </div>
 
             <div class="stat-box">
-                <h2>5</h2>
+                <h2>{{ overdue_count }}</h2>
                 <p>Overdue Books</p>
             </div>
         </div>

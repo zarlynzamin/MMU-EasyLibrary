@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
 import sqlite3
+import os 
 
 app = Flask(__name__)
 app.secret_key = "library_secret"
+
+UPLOAD_FOLDER = "static/profile_pictures"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 # ---------- DATABASE ----------
@@ -10,13 +16,24 @@ def create_database():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    try:
+        cursor.execute("""
+        ALTER TABLE users
+        ADD COLUMN profile_picture TEXT
+        """)
+    except:
+        pass
+
     #Users table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         email TEXT,
-        password TEXT
+        password TEXT,
+        favorite_genre TEXT,
+        member_since TEXT,
+        profile_picture TEXT
     )
     """)
 
@@ -26,6 +43,9 @@ def create_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
         book_title TEXT,
+        borrow_date TEXT,
+        due_date TEXT,
+        status TEXT,
         FOREIGN KEY(user_id) REFERENCES users(id)
     )
     """)
@@ -39,13 +59,10 @@ CREATE TABLE IF NOT EXISTS admins(
 )
 """)
 
-
     conn.commit()
     conn.close()
 
-
 create_database()
-
 
 # ---------- LOAD BOOKS ----------
 def load_books():
@@ -62,12 +79,72 @@ def load_books():
 
     return books
 
+# ---------- REGISTER ----------
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        member_since = datetime.now() .strftime("%Y")
+
+        cursor.execute("""
+        INSERT INTO users(
+            username, 
+            email,
+            password, 
+            favorite_genre, 
+            member_since
+        )
+        VALUES (?, ?, ?, ?, ?)
+        """, (
+            username,
+            email, 
+            password, 
+            "", 
+            member_since
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("sign_in"))
+
+    return render_template("register.html")
+
+
+# ---------- SIGN IN ----------
+@app.route("/sign_in", methods=["GET", "POST"])
+def sign_in():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        SELECT * FROM users
+        WHERE email=? AND password=?
+        """, (email, password))
+
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            session["user_id"] = user[0]
+            return redirect(url_for("index"))
+
+    return render_template("sign_in.html")
 
 # ---------- PAGES ----------
 @app.route("/")
 def homepage():
     return render_template("homepage.html")
-
 
 @app.route("/index")
 def index():
@@ -75,11 +152,13 @@ def index():
         return redirect(url_for("sign_in"))
     return render_template("index.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 @app.route("/rules")
 def rules():
     return render_template("rules.html")
-
 
 @app.route("/mybooks")
 def my_books():
@@ -94,6 +173,7 @@ def my_books():
     SELECT book_title
     FROM borrowed_books
     WHERE user_id=?
+    AND status='Borrowed'
     """, (session["user_id"],))
 
     borrowed_titles = [row[0] for row in cursor.fetchall()]
@@ -109,7 +189,7 @@ def my_books():
 
     return render_template("my_books.html", books=borrowed_book_details)
 
-
+# ---------- PROFILE ----------
 @app.route("/profile")
 def profile():
     if "user_id" not in session:
@@ -118,20 +198,107 @@ def profile():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    # Get user info
     cursor.execute("""
     SELECT * FROM users
     WHERE id=?
     """, (session["user_id"],))
 
     user = cursor.fetchone()
+    print(user)
+
+    # Profile picture
+    picture = user[6]
+
+    if picture:
+        profile_picture = url_for(
+            "static",
+            filename=f"profile_pictures/{picture}"
+        )
+    else:
+        profile_picture = url_for(
+            "static",
+            filename="default_profile.png"
+        )
+
+    # Count borrowed books
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM borrowed_books
+    WHERE user_id=?
+    """, (session["user_id"],))
+
+    borrowed_count = cursor.fetchone()[0]
+
+    # Count returned books
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM borrowed_books
+    WHERE user_id=?
+    AND status='Returned'
+    """, (session["user_id"],))
+
+    returned_count = cursor.fetchone()[0]
+
+    # Count overdue books
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM borrowed_books
+    WHERE user_id=?
+    AND due_date < ?
+    AND status='Borrowed'
+    """, (session["user_id"], today))
+
+    overdue_count = cursor.fetchone()[0]
+
     conn.close()
 
     return render_template(
         "profile.html",
         username=user[1],
-        email=user[2]
+        email=user[2],
+        favorite_genre=user[4],
+        member_since=user[5],
+        profile_picture=profile_picture,
+        borrowed_count=borrowed_count,
+        returned_count=returned_count,
+        overdue_count=overdue_count
     )
 
+# ---------- UPDATE PICTURE ----------
+@app.route("/upload-picture", methods=["POST"])
+def upload_picture():
+
+    if "user_id" not in session:
+        return redirect(url_for("sign_in"))
+
+    picture = request.files["picture"]
+
+    if picture:
+        filename = secure_filename(picture.filename)
+
+        picture.save(
+            os.path.join(
+                app.config["UPLOAD_FOLDER"],
+                filename
+            )
+        )
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        UPDATE users
+        SET profile_picture=?
+        WHERE id=?
+        """, (filename, session["user_id"]))
+
+        conn.commit()
+        conn.close()
+
+    return redirect(url_for("profile"))
 
 # ---------- BOOK CATEGORY ----------
 @app.route("/category")
@@ -171,88 +338,46 @@ def borrow_book(title):
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    borrow_date = datetime.now() .strftime("%Y-%m-%d")
+    due_date = (datetime.now() + timedelta(days=14)) .strftime("%Y-%m-%d")
+
     cursor.execute("""
-    INSERT INTO borrowed_books(user_id, book_title)
-    VALUES (?, ?)
-    """, (session["user_id"], title))
+    INSERT INTO borrowed_books(
+        user_id, 
+        book_title,
+        borrow_date,
+        due_date,
+        status
+    )
+    VALUES (?, ?, ?, ?, ?)
+    """, (session["user_id"], 
+          title,
+          borrow_date,
+          due_date,
+          "Borrowed"
+    ))
 
     conn.commit()
     conn.close()
 
     return redirect(url_for("my_books"))
 
-
-# ---------- REGISTER ----------
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-
-        conn = sqlite3.connect("library.db")
-        cursor = conn.cursor()
-
-        cursor.execute("""
-        INSERT INTO users(username, email, password)
-        VALUES (?, ?, ?)
-        """, (username, email, password))
-
-        conn.commit()
-        conn.close()
-
-        return redirect(url_for("sign_in"))
-
-    return render_template("register.html")
-
-
-# ---------- SIGN IN ----------
-@app.route("/sign_in", methods=["GET", "POST"])
-def sign_in():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-
-        conn = sqlite3.connect("library.db")
-        cursor = conn.cursor()
-
-        cursor.execute("""
-        SELECT * FROM users
-        WHERE email=? AND password=?
-        """, (email, password))
-
-        user = cursor.fetchone()
-        conn.close()
-
-        if user:
-            session["user_id"] = user[0]
-            return redirect(url_for("index"))
-
-    return render_template("sign_in.html")
-
-
-# ---------- UPDATE PROFILE ----------
-@app.route("/update-profile", methods=["POST"])
-def update_profile():
-    if "user_id" not in session:
-        return redirect(url_for("sign_in"))
-
-    username = request.form["username"]
-    email = request.form["email"]
-
+@app.route("/return/<title>", methods=["POST"])
+def return_book(title):
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
     cursor.execute("""
-    UPDATE users
-    SET username=?, email=?
-    WHERE id=?
-    """, (username, email, session["user_id"]))
+    UPDATE borrowed_books
+    SET status='Returned'
+    WHERE user_id=?
+    AND book_title=?
+    """, (session["user_id"], title))
 
     conn.commit()
     conn.close()
 
-    return redirect(url_for("profile"))
+    return redirect(url_for("my_books"))
 
 # ---------- ADMIN ----------
 @app.route("/admin")
