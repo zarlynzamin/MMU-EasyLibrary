@@ -143,7 +143,7 @@ def sign_in():
 
 # ---------- PAGES ----------
 @app.route("/")
-def homepage():
+def index():
     if "user_id" not in session:
         return redirect(url_for("sign_in"))
     return render_template("index.html")
