@@ -263,6 +263,36 @@ def profile():
         overdue_count=overdue_count
     )
 
+@app.route('/update-profile', methods=['POST'])
+def update_profile():
+ 
+    if "user_id" not in session:
+        return redirect(url_for("sign_in"))
+    
+    username = request.form.get("username")
+    email = request.form.get("email")
+    favorite_genre = request.form.get("favorite_genre")
+
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+       UPDATE users
+       SET username=?,
+           email=?,
+           favorite_genre=?
+       WHERE id=?
+    """, (username,
+          email,
+          favorite_genre, 
+          session["user_id"]))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("profile"))
+    
+
 # ---------- UPDATE PICTURE ----------
 @app.route("/upload-picture", methods=["POST"])
 def upload_picture():
