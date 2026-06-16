@@ -1,0 +1,278 @@
+<?php
+
+$conn = new mysqli("localhost","root","","library_system");
+
+
+if($conn->connect_error){
+    die("Connection Failed: ".$conn->connect_error);
+}
+
+
+if(isset($_GET['id'])){
+
+    $borrow_id = $_GET['id'];
+
+
+    $sql = "
+    SELECT 
+    borrowings.*,
+    users.username,
+    books.book_name
+
+    FROM borrowings
+
+    JOIN users 
+    ON borrowings.user_id = users.user_id
+
+    JOIN books
+    ON borrowings.book_id = books.book_id
+
+    WHERE borrow_id='$borrow_id'
+    ";
+
+
+    $result = $conn->query($sql);
+
+    $data = $result->fetch_assoc();
+
+}
+
+?>
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Penalty Receipt</title>
+
+
+<style>
+
+body{
+
+font-family:Arial;
+background:#eeeeee;
+
+}
+
+
+.receipt{
+
+width:400px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+
+}
+
+
+h2{
+
+text-align:center;
+
+}
+
+
+.line{
+
+border-bottom:1px dashed black;
+margin:15px 0;
+
+}
+
+
+table{
+
+width:100%;
+
+}
+
+
+td{
+
+padding:8px;
+
+}
+
+
+button{
+
+width:100%;
+padding:10px;
+background:#007bff;
+color:white;
+border:none;
+cursor:pointer;
+
+}
+
+
+@media print{
+
+button{
+display:none;
+}
+
+body{
+background:white;
+}
+
+.receipt{
+box-shadow:none;
+}
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="receipt">
+
+
+<h2>LIBRARY PENALTY RECEIPT</h2>
+
+
+<div class="line"></div>
+
+
+
+<table>
+
+
+<tr>
+<td><b>Receipt No</b></td>
+<td>
+<?php echo $data['borrow_id']; ?>
+</td>
+</tr>
+
+
+<tr>
+<td><b>User</b></td>
+<td>
+<?php echo $data['username']; ?>
+</td>
+</tr>
+
+
+
+<tr>
+<td><b>Book</b></td>
+<td>
+<?php echo $data['book_name']; ?>
+</td>
+</tr>
+
+
+
+<tr>
+<td><b>Borrow Date</b></td>
+<td>
+<?php echo $data['borrow_date']; ?>
+</td>
+</tr>
+
+
+
+<tr>
+<td><b>Due Date</b></td>
+<td>
+<?php echo $data['due_date']; ?>
+</td>
+</tr>
+
+
+
+<tr>
+<td><b>Return Date</b></td>
+<td>
+<?php echo $data['return_date']; ?>
+</td>
+</tr>
+
+
+
+<tr>
+
+<td><b>Penalty</b></td>
+
+<td>
+RM <?php echo $data['penalty']; ?>
+</td>
+
+</tr>
+
+
+
+</table>
+
+
+
+<div class="line"></div>
+
+
+<h3 style="text-align:center">
+
+Thank You
+
+</h3>
+
+
+<button onclick="window.print()">
+
+Print Receipt
+
+</button>
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
+
+
+
+
+========================
+     LIBRARY
+ PENALTY RECEIPT
+========================
+
+Receipt No : 15
+
+User       : Navan
+Book       : Database System
+
+Borrow Date:
+2026-05-20
+
+Due Date:
+2026-05-27
+
+Return Date:
+2026-06-02
+
+Penalty:
+RM 6
+
+========================
+
+       Thank You
+
+[ Print Receipt ]
