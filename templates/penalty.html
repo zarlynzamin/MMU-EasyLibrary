@@ -1,0 +1,48 @@
+<h1>Penalty Records</h1>
+
+
+{% if penalties %}
+
+
+{% for p in penalties %}
+
+
+<div class="book-card">
+
+<h3>{{p.book_title}}</h3>
+
+
+<p>
+Late Days:
+{{p.late_days}}
+</p>
+
+
+<p>
+Penalty:
+RM {{p.amount}}
+</p>
+
+
+<p>
+Status:
+{{p.payment_status}}
+</p>
+
+
+<a href="/receipt/{{p.id}}">
+Generate Receipt
+</a>
+
+
+</div>
+
+
+{% endfor %}
+
+
+{% else %}
+
+<p>No penalty found</p>
+
+{% endif %}

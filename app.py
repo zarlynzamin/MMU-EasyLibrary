@@ -51,6 +51,19 @@ def create_database():
     )
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS penalties(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        book_title TEXT,
+        late_days INTEGER,
+        amount REAL,
+        payment_status TEXT,
+        penalty_date TEXT,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    """)
+
     # Add missing columns if your old database already exists
     for column in ["favorite_genre", "member_since", "profile_picture"]:
         try:
@@ -442,20 +455,72 @@ def borrow_book(title):
 # ---------- RETURN BOOK ----------
 @app.route("/return/<title>", methods=["POST"])
 def return_book(title):
+
     if "user_id" not in session:
         return redirect(url_for("sign_in"))
+
 
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+
     cursor.execute("""
-    UPDATE borrowed_books
-    SET status='Returned'
-    WHERE user_id=? AND book_title=? AND status='Borrowed'
-    """, (session["user_id"], title))
+    SELECT due_date 
+    FROM borrowed_books
+    WHERE user_id=? 
+    AND book_title=?
+    AND status='Borrowed'
+    """,
+    (session["user_id"], title))
+
+
+    result = cursor.fetchone()
+
+
+    if result:
+
+        due_date = datetime.strptime(result[0], "%Y-%m-%d")
+
+        today = datetime.now()
+
+
+        late_days = (today - due_date).days
+
+
+        if late_days > 0:
+
+            penalty = late_days * 1
+
+
+            cursor.execute("""
+            INSERT INTO penalties
+            (user_id, book_title, late_days, amount, payment_status, penalty_date)
+
+            VALUES (?,?,?,?,?,?)
+            """,
+            (
+            session["user_id"],
+            title,
+            late_days,
+            penalty,
+            "Unpaid",
+            today.strftime("%Y-%m-%d")
+            ))
+
+
+
+        cursor.execute("""
+        UPDATE borrowed_books
+        SET status='Returned'
+        WHERE user_id=? 
+        AND book_title=?
+        """,
+        (session["user_id"], title))
+
 
     conn.commit()
     conn.close()
+
 
     return redirect(url_for("my_books"))
 
