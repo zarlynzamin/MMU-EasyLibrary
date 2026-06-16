@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import sqlite3
 import os
+import re
 
 app = Flask(__name__)
 app.secret_key = "library_secret"
@@ -91,13 +92,63 @@ def load_books():
 def register():
     if request.method == "POST":
         username = request.form["username"]
+
+        if len(username) < 5:
+            return render_template(
+                "register.html",
+                error="Username must be at least 5 characters."
+            )
+        
+        if " " in username:
+            return render_template(
+                "register.html",
+                error="Username cannot contain spaces."
+            )
+        
+        if not re.match(r"^[A-Za-z0-9_]+$",username):
+            return render_template(
+                "register.html",
+                error="Username can only contain letters, numbers and underscores."
+            )
+        
         email = request.form["email"]
         password = request.form["password"]
         member_since = datetime.now().strftime("%Y")
 
         conn = sqlite3.connect("library.db")
         cursor = conn.cursor()
+        
+        #Username check
+        cursor.execute(
+                        "SELECT * FROM users WHERE username=?",
+                        (username,)
+         )
+        
+        existing_user = cursor.fetchone()
 
+        if existing_user:
+            conn.close()
+            return render_template(
+                "register.html",
+                error="Username already exists. Please choose another username.",
+            )
+        
+        #Email check
+        cursor.execute(
+                        "SELECT * FROM users WHERE email=?",
+                        (email,)
+         )
+        
+        existing_email = cursor.fetchone()
+
+        if existing_email:
+            conn.close()
+            return render_template(
+                "register.html",
+                error="Email is already registered.",
+            )
+        
+        #Insert new user
         cursor.execute("""
         INSERT INTO users(username, email, password, favorite_genre, member_since, profile_picture)
         VALUES (?, ?, ?, ?, ?, ?)
@@ -249,10 +300,11 @@ def profile():
         profile_picture=profile_picture,
         borrowed_count=borrowed_count,
         returned_count=returned_count,
-        overdue_count=overdue_count
+        overdue_count=overdue_count,
+        error=request.args.get("error")
     )
 
-
+# ---------- UPDATE PROFILE ----------
 @app.route("/update-profile", methods=["POST"])
 def update_profile():
     if "user_id" not in session:
@@ -264,6 +316,29 @@ def update_profile():
 
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM users
+    WHERE username=? AND id!=?
+    """, (username, session["user_id"]))
+
+    existing_username = cursor.fetchone()
+
+    if existing_username:
+        conn.close()
+
+        return redirect(url_for("profile", error="Username already taken."))
+    
+    cursor.execute("""
+    SELECT * FROM users
+    WHERE email=? AND id!=?
+    """, (email, session["user_id"]))
+
+    existing_email = cursor.fetchone()
+
+    if existing_email:
+        conn.close()
+        return redirect(url_for("profile", error="Email already registered."))
 
     cursor.execute("""
     UPDATE users

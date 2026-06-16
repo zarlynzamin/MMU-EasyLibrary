@@ -45,6 +45,18 @@ body {
     margin-bottom: 25px;
 }
 
+.error-message{
+    background: #ffe5e5;
+    color: #d63031;
+    border: 1px solid #ffb3b3;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .input-box {
     margin-bottom: 18px;
 }

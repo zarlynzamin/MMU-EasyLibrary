@@ -504,6 +504,16 @@ nav img {
     font-weight: 600;
 }
 
+.error-box{
+    background: #ffe5e5;
+    color: #cc0000;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
 /* FOOTER */
 
 .footer,

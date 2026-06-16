@@ -31,23 +31,27 @@
 
     </div>
     <div class="wrapper">
-        <form action="/register" method="post">
+        <form action="/register" method="post" autocomplete="off">
             <h1>Register</h1>
             <p class="subtitle">Welcome! Please fill in below.</p>
+
+            {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+            {% endif %}
+
             <div class="input-box">
-                <input type="email" name="email" placeholder="Email"
-                required>
+                <input type="email" name="email" placeholder="Email" autocomplete="off" required>
             </div>
 
 
             <div class="input-box">
-                <input type="text" name="username" placeholder="Username"
-                required>
+                <input type="text" name="username" placeholder="Username" autocomplete="off" required>
             </div>
 
             <div class="input-box">
-                <input type="password" name="password" placeholder="Password"
-                required>
+                <input type="password" name="password" placeholder="Password" autocomplete="new-password" required>
             </div>
 
 
