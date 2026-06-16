@@ -137,13 +137,48 @@ def sign_in():
 
     return render_template("sign_in.html")
 
-
 # ---------- USER LOGOUT ----------
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)
     return redirect(url_for("sign_in"))
 
+# ---------- FORGOT PASSWORD ----------
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form["email"]
+        new_password = request.form["new_password"]
+        confirm_password = request.form["confirm_password"]
+
+        if new_password != confirm_password:
+            return "Passwords do not match. <a href='/forgot-password'>Try again</a>"
+
+        conn = sqlite3.connect("library.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users WHERE email=?",
+            (email,)
+        )
+
+        user = cursor.fetchone()
+
+        if user:
+            cursor.execute("""
+            UPDATE users
+            SET password=?
+            WHERE email=?
+            """, (new_password, email))
+
+            conn.commit()
+            conn.close()
+
+            return render_template("password_reset_success.html")
+
+        conn.close()
+        return "Email not found."
+    return render_template("forgot_password.html")
 
 # ---------- PAGES ----------
 @app.route("/")
