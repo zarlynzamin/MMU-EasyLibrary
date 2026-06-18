@@ -93,6 +93,30 @@ def load_books():
 
     return books
 
+# ---------- SEARCH BOOKS ----------
+@app.route("/search")
+def search():
+
+    keyword = request.args.get("q", "").lower()
+    books = load_books()
+
+    results = []
+
+    for book in books:
+
+        if (keyword in book["title"].lower()
+            or
+            keyword in book["category"].lower()
+            or
+            keyword in book["summary"].lower()
+        ):
+            results.append(book)
+
+    return render_template(
+        "search_results.html",
+        books=results,
+        keyword=keyword
+    )
 
 # ---------- USER REGISTER ----------
 @app.route("/register", methods=["GET", "POST"])
@@ -296,6 +320,14 @@ def profile():
     """, (session["user_id"], today))
     overdue_count = cursor.fetchone()[0]
 
+    cursor.execute("""
+    SELECT book_title, return_date
+    FROM borrowed_books
+    WHERE user_id=? AND status='Returned'
+    ORDER BY id DESC
+    """, (session["user_id"], ))
+    returned_book_history = cursor.fetchall()
+
     conn.close()
 
     return render_template(
@@ -308,6 +340,7 @@ def profile():
         borrowed_count=borrowed_count,
         returned_count=returned_count,
         overdue_count=overdue_count,
+        returned_book_history=returned_book_history,
         error=request.args.get("error")
     )
 
@@ -516,9 +549,12 @@ def return_book(title):
 
     cursor.execute("""
     UPDATE borrowed_books
-    SET status='Pending Return'
+    SET status='Pending Return',
+        return_date=?
     WHERE user_id=? AND book_title=? AND status='Borrowed'
-    """, (session["user_id"], title))
+    """, (
+        datetime.now().strftime("%Y-%m-%d"),
+        session["user_id"], title))
 
     conn.commit()
     conn.close()
@@ -650,6 +686,21 @@ def admin_page():
 
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    cursor.execute("""
+    UPDATE users
+    SET is_blocked = 1
+    WHERE id IN (
+        SELECT user_id
+        FROM borrowed_books
+        WHERE due_date < ?
+        AND status='Borrowed'
+    )
+    """, (today,))
+
+    conn.commit()
 
     cursor.execute("SELECT COUNT(*) FROM users")
     total_users = cursor.fetchone()[0]

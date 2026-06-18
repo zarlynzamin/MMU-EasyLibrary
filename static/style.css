@@ -192,6 +192,34 @@ nav img {
     margin-top: 40px;
 }
 
+/* SEARCH BAR */
+.search-form{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.search-box{
+    width:350px;
+    padding:14px;
+    border:none;
+    border-radius:30px;
+    font-size:15px;
+}
+
+.search-btn{
+    padding:14px 25px;
+    border:none;
+    border-radius:30px;
+    background:var(--primary);
+    font-weight:bold;
+    cursor:pointer;
+    margin-left:10px;
+}
+
+.search-btn:hover{
+    background:var(--secondary);
+}
+
 /* CATEGORIES */
 .categories {
     width: 90%;
@@ -509,6 +537,40 @@ nav img {
     font-weight: 600;
 }
 
+/* RETURNED BOOK HISTORY */
+.history-section{
+    margin-top: 30px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+.history-section h2{
+    color: var(--text);
+    margin-bottom: 20px;
+}
+
+.history-list{
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.history-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.history-date{
+    font-weight: 500;
+    color: #7a6530;
+    font-size: 14px;
+}
+
 /* FOOTER */
 .footer,
 footer {
@@ -638,4 +700,20 @@ footer {
     color:#666;
     line-height:1.8;
     margin-bottom:15px;
+}
+
+.penalty-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:14px 35px;
+    background:linear-gradient(135deg,#F4C542,#FFE08A);
+    color:#4A3B1A;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:50px;
+    transition:0.3s;
+}
+
+.penalty-btn:hover{
+    transform:translateY(-3px) scale(1.03);
 }

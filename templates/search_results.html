@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="profile-body">
+<div class="main-content">
+
+    <h1>Search Results</h1>
+
+    <p>
+        Results for:
+        <strong>{{ keyword }}</strong>
+    </p>
+
+    {% if books %}
+        <div class="cat-books">
+            {% for book in books %}
+            <a href="/book/{{ book.title }}"
+               class="book-link">
+
+                <div class="books">
+
+                    <h4>{{ book.title }}</h4>
+
+                    <p>{{ book.category }}</p>
+
+                </div>
+
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="/" class="hero-btn">
+        Back to Homepage
+    </a>
+
+</div>
+</body>
+
+</html>
