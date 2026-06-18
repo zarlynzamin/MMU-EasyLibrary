@@ -63,6 +63,11 @@ def create_database():
     except:
         pass
 
+    try:
+        cursor.execute("ALTER TABLE borrowed_books ADD COLUMN is_blocked INTEGER DEFAULT 0")
+    except:
+        pass
+
     conn.commit()
     conn.close()
 
@@ -417,6 +422,31 @@ def borrow_book(title):
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    today = datetime.now().strftime("%Y-%m-%d")
+    
+    cursor.execute("""
+    UPDATE users
+    SET is_blocked = 1
+    WHERE id IN (
+        SELECT user_id
+        FROM borrowed_books
+        WHERE due_date < ?
+        AND status='Borrowed'
+    )
+    """, (today,))
+
+    cursor.execute("""
+    SELECT is_blocked
+    FROM users
+    WHERE id=?
+    """, (session["user_id"],))
+
+    blocked = cursor.fetchone()[0]
+
+    if blocked == 1:
+        conn.close()
+        return render_template("penalty.html")
+
     cursor.execute("""
     SELECT * FROM borrowed_books
     WHERE user_id=? AND book_title=? AND status='Borrowed'
@@ -450,7 +480,7 @@ def return_book(title):
 
     cursor.execute("""
     UPDATE borrowed_books
-    SET status='Returned'
+    SET status='Pending Return'
     WHERE user_id=? AND book_title=? AND status='Borrowed'
     """, (session["user_id"], title))
 
@@ -469,6 +499,7 @@ def my_books():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    # Borrowed books
     cursor.execute("""
     SELECT book_title, borrow_date, due_date
     FROM borrowed_books
@@ -476,11 +507,24 @@ def my_books():
     """, (session["user_id"],))
 
     borrowed_books = cursor.fetchall()
+
+    # Pending return books
+    cursor.execute("""
+    SELECT book_title, borrow_date, due_date
+    FROM borrowed_books
+    WHERE user_id=? AND status='Pending Return'
+    """, (session["user_id"],))
+
+    pending_books = cursor.fetchall()
+
     conn.close()
 
     books = load_books()
-    borrowed_book_details = []
 
+    borrowed_book_details = []
+    pending_book_details = []
+
+    # Borrowed books details
     for borrowed in borrowed_books:
         title = borrowed[0]
 
@@ -491,7 +535,22 @@ def my_books():
                 book_copy["due_date"] = borrowed[2]
                 borrowed_book_details.append(book_copy)
 
-    return render_template("my_books.html", books=borrowed_book_details)
+    # Pending return details
+    for borrowed in pending_books:
+        title = borrowed[0]
+
+        for book in books:
+            if book["title"] == title:
+                book_copy = book.copy()
+                book_copy["borrow_date"] = borrowed[1]
+                book_copy["due_date"] = borrowed[2]
+                pending_book_details.append(book_copy)
+
+    return render_template(
+        "my_books.html",
+        books=borrowed_book_details,
+        pending_books=pending_book_details
+    )
 
 
 # ---------- ADMIN REGISTER ----------
@@ -570,6 +629,26 @@ def admin_page():
     """)
 
     records = cursor.fetchall()
+
+    cursor.execute("""
+    SELECT borrowed_books.id,
+           users.username,
+           users.email,
+           borrowed_books.book_title
+    FROM borrowed_books
+    JOIN users ON borrowed_books.user_id = users.id
+    WHERE borrowed_books.status='Pending Return'
+    """)
+
+    pending_returns = cursor.fetchall()
+
+    cursor.execute("""
+    SELECT id, username, email
+    FROM users
+    WHERE is_blocked = 1
+    """)
+
+    blocked_users = cursor.fetchall()
     conn.close()
 
     books = load_books()
@@ -581,9 +660,45 @@ def admin_page():
         total_users=total_users,
         total_books=total_books,
         borrowed_count=borrowed_count,
-        records=records
+        records=records,
+        pending_returns = pending_returns,
+        blocked_users = blocked_users
     )
 
+# ---------- ADMIN APPROVE RETURN ----------
+@app.route("/approve-return/<int:borrow_id>", methods=["POST"])
+def approve_return(borrow_id):
+
+    if "admin_logged_in" not in session:
+        return redirect(url_for("admin_login"))
+
+    conn = sqlite3.connect("library.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT user_id
+    FROM borrowed_books
+    WHERE id=?
+    """, (borrow_id,))
+
+    user_id = cursor.fetchone()[0]
+
+    cursor.execute("""
+    UPDATE borrowed_books
+    SET status='Returned'
+    WHERE id=?
+    """, (borrow_id,))
+
+    cursor.execute("""
+    UPDATE users
+    SET is_blocked=0
+    WHERE id=?
+    """, (user_id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("admin_page"))
 
 # ---------- ADMIN ADD BOOK ----------
 @app.route("/admin/add", methods=["GET", "POST"])

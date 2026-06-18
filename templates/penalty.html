@@ -1,48 +1,30 @@
-<h1>Penalty Records</h1>
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Penalty Notice</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-{% if penalties %}
+<body class="profile-body">
+    <div class="blocked-container">
+        <div class="blocked-card">
 
+            <div class="blocked-icon">
+                ⚠️
+            </div>
 
-{% for p in penalties %}
+            <h1>Penalty Notice</h1>
 
+            <p>You have an overdue book.</p>
 
-<div class="book-card">
+            <p>Please return the book and wait for administrator approval before borrowing additional books.</p>
 
-<h3>{{p.book_title}}</h3>
+            <a href="/mybooks" class="btn">View My Books</a>
 
+        </div>
+    </div>
 
-<p>
-Late Days:
-{{p.late_days}}
-</p>
-
-
-<p>
-Penalty:
-RM {{p.amount}}
-</p>
-
-
-<p>
-Status:
-{{p.payment_status}}
-</p>
-
-
-<a href="/receipt/{{p.id}}">
-Generate Receipt
-</a>
-
-
-</div>
-
-
-{% endfor %}
-
-
-{% else %}
-
-<p>No penalty found</p>
-
-{% endif %}
+</body>
+</html>
