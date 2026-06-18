@@ -20,7 +20,6 @@ body {
 }
 
 /* HEADER */
-
 .header {
     min-height: 100vh;
     width: 100%;
@@ -116,7 +115,6 @@ nav img {
 }
 
 /* ABOUT PAGE */
-
 .about-card {
     background: var(--white);
     border-radius: 22px;
@@ -195,7 +193,6 @@ nav img {
 }
 
 /* CATEGORIES */
-
 .categories {
     width: 90%;
     margin: auto;
@@ -298,7 +295,6 @@ nav img {
 }
 
 /* RULES PAGE */
-
 .rules-card {
     background: var(--white);
     border-radius: 22px;
@@ -377,7 +373,6 @@ nav img {
 }
 
 /* PROFILE PAGE */
-
 .profile-body {
     margin: 0;
     min-height: 100vh;
@@ -504,8 +499,17 @@ nav img {
     font-weight: 600;
 }
 
-/* FOOTER */
+.error-box{
+    background: #ffe5e5;
+    color: #cc0000;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
 
+/* FOOTER */
 .footer,
 footer {
     background: var(--primary);
@@ -514,4 +518,124 @@ footer {
     text-align: center;
     font-size: 15px;
     font-weight: 600;
+}
+
+/* ADMIN CARDS */
+.admin-card {
+    background: var(--white);
+    margin-top: 30px;
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 10px 25px var(--shadow);
+}
+
+.admin-card h2 {
+    color: var(--text);
+    margin-bottom: 20px;
+}
+
+/* ADMIN TABLES */
+.admin-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.admin-card th {
+    background: var(--primary);
+    color: var(--text);
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.admin-card td {
+    padding: 15px;
+    border-bottom: 1px solid var(--secondary);
+}
+
+.admin-card tr:hover {
+    background: var(--background);
+}
+
+.admin-card tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-card input,
+.admin-card select,
+.admin-card textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid var(--secondary);
+    border-radius: 10px;
+    background: var(--background);
+}
+
+.admin-card form button {
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-card form button:hover {
+    background: var(--secondary);
+}
+
+/* APPROVE BUTTON */
+.approve-btn {
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.approve-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+}
+
+/* PENALTY PAGE */
+.blocked-container{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.blocked-card{
+    width:600px;
+    background:white;
+    padding:50px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+.blocked-icon{
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+.blocked-card h1{
+    color:#4A3B1A;
+    margin-bottom:20px;
+}
+
+.blocked-card p{
+    color:#666;
+    line-height:1.8;
+    margin-bottom:15px;
 }

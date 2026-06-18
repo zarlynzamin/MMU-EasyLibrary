@@ -1,37 +1,58 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Register Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin_style.css' ) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_project.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 
-<body class="profile-body">
+<body>
+    
+    <div class="top-bar">
+    <div class="brand">
+        <i class="bx bx-book"></i>
+        <span>MMU EasyLibrary</span>
+    </div>
 
-
-    <div class="main-content admin-register">
-        <div class ="admin-card">
-            <form action="/admin/register" method="post">
-                <h1>Admin Register</h1>
-                <div class="input-box">
-                    <input type="text" name="username" placeholder="Username"
-                    required>
-                </div>
-
+    <div class="top-links">
+        <a href="/register" class="top-btn">Register</a>
+        <a href="/admin/login" class="admin-btn">Admin</a>
+    </div>
+</div>
+    <div class="wrapper">
+        <form action="/admin/register" method="post" autocomplete="off">
+            <h1>Admin Register</h1>
+            <p class="subtitle">Welcome! Please register for an admin account.</p>
             <div class="input-box">
-                <input type="email" name="email" placeholder="Email"
-                required>
+                <input type="text" name="username" placeholder="Username" autocomplete="off" required>
             </div>
 
+
             <div class="input-box">
-                <input type="password" name="password" placeholder="Password"
-                required>
+                <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+            </div>
+
+
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="/admin/forgot-password">Forgot Password?</a>
             </div>
 
             <br></br>
             <button type="submit" class="btn">Register</button>
 
-            <p>Already admin? <a href="/admin/login" class="btn">Login Here</a></p>
+            <div class="register-link">
+                <p>Already have an account? <a href="/admin/login">Login</a>
+                </p>
+            </div>
         </form>
     </div>
 </body>

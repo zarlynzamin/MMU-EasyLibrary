@@ -90,3 +90,7 @@ button:hover,
 .btn:hover {
     background: var(--secondary);
 }
+
+.pending-card{
+    border-left: 6px solid orange;
+}

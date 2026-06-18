@@ -45,6 +45,18 @@ body {
     margin-bottom: 25px;
 }
 
+.error-message{
+    background: #ffe5e5;
+    color: #d63031;
+    border: 1px solid #ffb3b3;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .input-box {
     margin-bottom: 18px;
 }
@@ -92,10 +104,18 @@ button:hover,
     height: 60px;
     background: var(--primary);
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 12px;
     padding: 0 20px;
     box-sizing: border-box;
+}
+
+.top-bar span {
+    font-size: 20px;
+    color: var(--text);
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: auto;
 }
 
 .top-bar i {
@@ -123,7 +143,20 @@ span {
     font-size: 20px;
     color: var(--text);
     font-weight: bold;
-    margin-left: 10px;
+    align-self: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
 }
 
 p {
@@ -142,25 +175,26 @@ p a:hover {
     text-decoration: underline;
 }
 
-.admin-btn{
-    position: fixed;
-    top: 12px;
-    right: 120px; /* sits next to login button */
-    
-    background: white;
+.top-btn,
+.admin-btn {
     color: var(--text);
-
-    padding: 8px 18px;
-    border-radius: 20px;
-
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-
+    padding: 8px 18px;
+    background: var(--white);
+    border-radius: 20px;
+    display: inline-block;
+    transition: 0.3s;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-
-    z-index: 999;
 }
+
+
+.top-btn:hover,
+.admin-btn:hover {
+    background: var(--secondary);
+}
+
 
 .logout-btn{
     color: var(--text);

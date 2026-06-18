@@ -17,7 +17,7 @@
     <div class="nav-links">
         <ul>
             
-            <li><a href="/rules">RULES</a></li>
+            
             <li><a href="/admin">ADMIN</a></li>
             <li><a href="/admin/logout">LOGOUT</a></li>
         </ul>
@@ -65,8 +65,8 @@
 
                 <button type="submit" class="btn">Add Book</button>
             </form>
-</div>
-</div>
+        </div>
+
     <div class="admin-card">
         <h2>Borrow Records</h2>
 
@@ -90,8 +90,62 @@
             </tbody>
 
         </table>
-
     </div>
+
+    <div class="admin-card">
+        <h2>Pending Return Requests</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Book Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in pending_returns %}
+                <tr>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>
+                        <form action="/approve-return/{{ row[0] }}" method="post">
+                            <button type="submit" class="approve-btn">
+                                Approve
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-card">
+        <h2>Blocked Users</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in blocked_users %}
+                <tr>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 </body>

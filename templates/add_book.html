@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        {% if success %}
-            <script>
-                alert("Book added successfully!");
-            </script>
-        {% endif %}
+        
+    </head>
     <body>
-
+{% if success %}
+<script>
+    alert("Book added successfully!");
+    window.location.href = "{{ url_for('admin_page') }}";
+</script>
+{% endif %}
     </body>
 </html>

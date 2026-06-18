@@ -68,6 +68,13 @@
 
             <div class="profile-right">
                 <form action="/update-profile" method="post">
+
+                {% if error %}
+                <div class="error-box">
+                    {{ error }}
+                </div>
+                {% endif %}
+
                 <div class="info-row">
                     <span>Username</span>
                     <input type="text"

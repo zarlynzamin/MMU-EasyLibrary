@@ -5,11 +5,10 @@
     <title>EasyLibrary</title>    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
     <section class="header">
         <nav>
-            <a href="index.html"><img src="{{ url_for('static', filename='images/test1.png') }}"></a>
+            <a href="index.html"><img src="{{ url_for('static', filename='images/logo2.png') }}" style="width:400px; height:auto;"></a>
             <div class="nav-links">
                 <ul>
                     <li><a href="{{ url_for('index') }}">HOME</a></li>
@@ -17,6 +16,7 @@
                     <li><a href="{{ url_for('my_books') }}">MY BOOKS</a></li>
                     <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
                     <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                   
                 </ul>
             </div>
         </nav>

@@ -1,25 +1,71 @@
-<h1>My Borrowed Books</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Books</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='my_books.css') }}">
-<h2>You are borrowing {{ books|length }} book(s)</h2>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='my_books.css') }}">
+</head>
 
-{% if books %}
-    {% for book in books %}
-        <div class="book-card">
+<body>
+    <h1>My Borrowed Books</h1>
+    
+    <h2>You are borrowing {{ books|length }} book(s)</h2>
+    
+    {% if books %}
+        {% for book in books %}
+           <div class="book-card">
+            
             <h3>{{ book.title }}</h3>
+
             <p><b>Category:</b> {{ book.category }}</p>
+
             <p><b>Borrowed on:</b> {{ book.borrow_date }}</p>
+
             <p><b>Due date:</b> {{ book.due_date }}</p>
 
-            <form action="{{ url_for('return_book', title=book.title) }}" method="post">
-                <button type="submit" class="btn">Return Book</button>
+            <form action="{{ url_for('return_book', title=book.title) }}"
+                  method="post">
+                <button type="submit" class="btn">
+                    Return Book
+                </button>
             </form>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>You have not borrowed any books yet.</p>
-{% endif %}
 
-<a href="/" class="back-btn">Back to homepage</a>
+           </div>
+        {% endfor %}
+    {% else %}
+       <p>You have not borrowed any books yet.</p>
+    {% endif %}
+    
+    <hr>
+    
+    <h2>Pending Return Approval</h2>
+    
+    {% if pending_books %}
+        {% for book in pending_books %}
+           <div class="book-card pending-card">
+            
+                <h3>{{ book.title }}</h3>
+                
+                <p><b>Category:</b> {{ book.category }}</p>
+                
+                <p><b>Status:</b> Pending Return</p>
+                
+                <p>Waiting for admin approval.</p>
+            
+            </div>
+        {% endfor %}
+    {% else %}
+       <p>No pending return requests.</p>
+    {% endif %}
+
+    <a href="/" class="back-btn">
+        Back to Homepage
+    </a>
+
+</body>
+</html>

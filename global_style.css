@@ -29,8 +29,11 @@ nav{
 }
 
 nav img{
-    width:150px;
+    width:1000px;
+    height: auto;   /* keep proportions */
 }
+
+
 
 .nav-links{
     flex:1;
