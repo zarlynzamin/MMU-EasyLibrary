@@ -135,6 +135,26 @@
             </div>
         </div>
 
+        <div class="history-section">
+            <h2>Returned Book History</h2>
+
+            {% if returned_book_history %}
+               <ul class="history-list">
+                   {% for book in returned_book_history %}
+                   <li class="history-item">
+                    <span>✓ {{ book[0] }}</span>
+
+                    <span class="history-date">Return on {{ book[1] }}</span>
+                   </li>
+                   {% endfor %}
+                </ul>
+
+            {% else %}
+               <p>No returned books yet.</p>
+            {% endif %}
+
+        </div>
+
     </div>
 
 </body>

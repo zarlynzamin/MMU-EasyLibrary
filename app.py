@@ -81,18 +81,45 @@ create_database()
 def load_books():
     books = []
 
-    with open("book.txt", "r") as file:
+    with open("book.txt", "r", encoding="utf-8") as file:
         for line in file:
             if line.strip():
-                title, category, summary = line.strip().split("|")
+                title, category, genre, summary = line.strip().split("|")
                 books.append({
                     "title": title,
                     "category": category,
+                    "genre": genre,
                     "summary": summary
                 })
 
     return books
 
+# ---------- SEARCH BOOKS ----------
+@app.route("/search")
+def search():
+
+    keyword = request.args.get("q", "").lower()
+    books = load_books()
+
+    results = []
+
+    for book in books:
+
+        if (keyword in book["title"].lower()
+            or
+            keyword in book["category"].lower()
+            or
+            keyword in book["genre"].lower()
+            or
+            keyword in book["summary"].lower()
+        ):
+            results.append(book)
+
+    return render_template(
+        "search_results.html",
+        books=results,
+        keyword=keyword
+    )
 
 # ---------- USER REGISTER ----------
 @app.route("/register", methods=["GET", "POST"])
@@ -296,6 +323,14 @@ def profile():
     """, (session["user_id"], today))
     overdue_count = cursor.fetchone()[0]
 
+    cursor.execute("""
+    SELECT book_title, return_date
+    FROM borrowed_books
+    WHERE user_id=? AND status='Returned'
+    ORDER BY id DESC
+    """, (session["user_id"], ))
+    returned_book_history = cursor.fetchall()
+
     conn.close()
 
     return render_template(
@@ -308,6 +343,7 @@ def profile():
         borrowed_count=borrowed_count,
         returned_count=returned_count,
         overdue_count=overdue_count,
+        returned_book_history=returned_book_history,
         error=request.args.get("error")
     )
 
@@ -516,9 +552,12 @@ def return_book(title):
 
     cursor.execute("""
     UPDATE borrowed_books
-    SET status='Pending Return'
+    SET status='Pending Return',
+        return_date=?
     WHERE user_id=? AND book_title=? AND status='Borrowed'
-    """, (session["user_id"], title))
+    """, (
+        datetime.now().strftime("%Y-%m-%d"),
+        session["user_id"], title))
 
     conn.commit()
     conn.close()
@@ -651,6 +690,21 @@ def admin_page():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
 
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    cursor.execute("""
+    UPDATE users
+    SET is_blocked = 1
+    WHERE id IN (
+        SELECT user_id
+        FROM borrowed_books
+        WHERE due_date < ?
+        AND status='Borrowed'
+    )
+    """, (today,))
+
+    conn.commit()
+
     cursor.execute("SELECT COUNT(*) FROM users")
     total_users = cursor.fetchone()[0]
 
@@ -688,8 +742,17 @@ def admin_page():
     conn.close()
 
     books = load_books()
-    total_books = len(books)
 
+    selected_category = request.args.get("category")
+
+    if selected_category:
+        books = [
+        book for book in books
+        if book["category"] == selected_category
+    ]
+
+    total_books = len(books)
+    
     return render_template(
         "admin.html",
         books=books,
@@ -780,14 +843,33 @@ def add_book():
     if request.method == "POST":
         title = request.form["title"].strip()
         category = request.form["category"].strip()
+        genre = request.form["genre"].strip()
         summary = request.form["summary"].strip()
 
         with open("book.txt", "a") as file:
-            file.write(f"\n{title}|{category}|{summary}")
+            file.write(f"\n{title}|{category}|{genre}|{summary}")
 
         return render_template("add_book.html", success=True)
 
     return render_template("add_book.html")
+
+# ---------- ADMIN DELETE BOOK ----------
+@app.route("/admin/delete_book/<title>", methods=["POST"])
+def delete_book(title):
+    if "admin_logged_in" not in session:
+        return redirect(url_for("admin_login"))
+
+    with open("book.txt", "r", encoding="utf-8") as file:
+        lines = file.readlines()
+
+    with open("book.txt", "w", encoding="utf-8") as file:
+        for line in lines:
+            book_data = line.strip().split("|")
+
+            if book_data[0] != title:
+                file.write(line)
+
+    return redirect(url_for("admin_page"))
 
 
 # ---------- ADMIN LOGOUT ----------

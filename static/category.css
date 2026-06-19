@@ -1,15 +1,14 @@
-
 :root {
-    --primary: #F4C542;      /* Main yellow */
-    --secondary: #FFE08A;    /* Light yellow */
-    --background: #FFF9E6;   /* Cream */
-    --text: #4A3B1A;         /* Dark brown */
+    --primary: #F4C542;
+    --secondary: #FFE08A;
+    --background: #FFF9E6;
+    --text: #4A3B1A;
     --white: #FFFFFF;
 }
 
 body{
     margin: 0;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     background: var(--background);
     min-height: 100vh;
     text-align: center;
@@ -23,19 +22,16 @@ h1{
 }
 
 a{
-    color: var(--white);
+    color: var(--text);
     font-weight: bold;
 }
 
-
 .bookshelf{
-    display: flex;
-    gap: 30px;
-    padding: 30px;
-
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(5, 120px);
+    gap: 60px 35px;
     justify-content: center;
-    border-bottom: 18px solid var(--text);/*shelf*/
+    padding: 40px;
 }
 
 .book{
@@ -46,8 +42,21 @@ a{
     height: 180px;
     background: var(--secondary);
     border-radius: 6px 10px 10px 6px;
-    box-shadow: 8px 8px 15px rgba(0,0,0,0,0.25);
+    box-shadow: 8px 8px 15px rgba(0,0,0,0.25);
     transition: 0.3s;
+    position: relative;
+}
+
+.book::after{
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 9px;
+    background: #8b7a5a;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
 }
 
 .book:hover{

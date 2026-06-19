@@ -9,6 +9,7 @@
     <h1>{{ book.title }}</h1>
 
     <p><b>Category:</b> {{ book.category }}</p>
+    <p><b>Genre:</b> {{ book.genre }}</p>
     <p><b>Summary:</b> {{ book.summary }}</p>
     
     <form action="{{ url_for('borrow_book', title=book.title) }}" method="POST">
@@ -24,7 +25,7 @@
         </div>
     </div>
     <br><br>
-    <a href="/">Back to homepage</a>
+    <a href="/category?type={{ book.category }}">Back to {{ book.category }}</a>
 
     <script>
         function openPopup() {

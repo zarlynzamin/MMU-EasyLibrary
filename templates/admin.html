@@ -57,16 +57,65 @@
                     <option value="Science">Science</option>
                     <option value="Fiction">Fiction</option>
                     <option value="History">History</option>
-                    <option value="Fantasy">Fantasy</option>
                     <option value="Textbook">Textbook</option>
                 </select>
-
+                <select name="genre" required>
+                    <option value="Horror">Horror</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Thriller">Thriller</option>
+                </select>
                 <textarea name="summary" placeholder="Book Summary" required></textarea>
 
                 <button type="submit" class="btn">Add Book</button>
             </form>
+       
         </div>
+        <div class="admin-card">
+    <h2>Manage Books</h2>
 
+    <form action="{{ url_for('admin_page') }}" method="get">
+        <select name="category">
+            <option value="">All Categories</option>
+            <option value="Science">Science</option>
+            <option value="Fiction">Fiction</option>
+            <option value="History">History</option>
+            <option value="Textbook">Textbook</option>
+        </select>
+
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Genre</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.category }}</td>
+                <td>{{ book.genre }}</td>
+                <td>
+                    <form action="{{ url_for('delete_book', title=book.title) }}" method="post">
+                        <button type="submit" class="approve-btn"
+                                onclick="return confirm('Delete {{ book.title }}?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
     <div class="admin-card">
         <h2>Borrow Records</h2>
 
