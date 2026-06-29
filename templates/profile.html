@@ -136,6 +136,27 @@
         </div>
 
         <div class="history-section">
+            <h2>Overdue Books</h2>
+            
+            {% if overdue_book_history %}
+               <ul class="history-list">
+                   {% for book in overdue_book_history %}
+                   <li class="history-item overdue-item">
+                    
+                       <span>⚠ {{ book[0] }}</span>
+
+                       <span class="history-date">
+                            Due on {{ book[1] }}
+                       </span>
+                    </li>
+                   {% endfor %}
+                </ul>
+            {% else %}
+               <p>No overdue books.</p>
+            {% endif %}
+        </div>
+
+        <div class="history-section">
             <h2>Returned Book History</h2>
 
             {% if returned_book_history %}

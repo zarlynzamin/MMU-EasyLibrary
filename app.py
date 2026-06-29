@@ -324,6 +324,14 @@ def profile():
     overdue_count = cursor.fetchone()[0]
 
     cursor.execute("""
+    SELECT book_title, due_date
+    FROM borrowed_books
+    WHERE user_id=? AND due_date < ? AND status='Borrowed'
+    ORDER BY due_date ASC
+    """, (session["user_id"], today))
+    overdue_book_history = cursor.fetchall()
+
+    cursor.execute("""
     SELECT book_title, return_date
     FROM borrowed_books
     WHERE user_id=? AND status='Returned'
@@ -343,6 +351,7 @@ def profile():
         borrowed_count=borrowed_count,
         returned_count=returned_count,
         overdue_count=overdue_count,
+        overdue_book_history=overdue_book_history,
         returned_book_history=returned_book_history,
         error=request.args.get("error")
     )
