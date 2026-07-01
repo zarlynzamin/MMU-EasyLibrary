@@ -26,16 +26,8 @@
         <a href="/register" class="top-btn">Register</a>
         <a href="/admin/login" class="admin-btn">Admin</a>
     </div>
-</div>
-
-    <div class ="top-buttons">
-        
-
-        {% if session.get('admin_id') %}
-            <a href="/logout" class="top-btn">Logout</a>
-        {% endif %}
-
     </div>
+
     <div class="wrapper">
         <form action="/register" method="post" autocomplete="off">
             <h1>Register</h1>
