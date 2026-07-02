@@ -84,10 +84,11 @@ def load_books():
     with open("book.txt", "r", encoding="utf-8") as file:
         for line in file:
             if line.strip():
-                title, category, genre, summary = line.strip().split("|")
+                title, category, author, genre, summary = line.strip().split("|")
                 books.append({
                     "title": title,
                     "category": category,
+                    "author": author,
                     "genre": genre,
                     "summary": summary
                 })
