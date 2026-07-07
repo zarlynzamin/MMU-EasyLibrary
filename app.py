@@ -84,7 +84,17 @@ def load_books():
     with open("book.txt", "r", encoding="utf-8") as file:
         for line in file:
             if line.strip():
-                title, category, author, genre, summary = line.strip().split("|")
+                parts = line.strip().split("|")
+
+                if len(parts) == 5:
+                    title, category, author, genre, summary = parts
+                elif len(parts) == 3:
+                    title, category, summary = parts
+                    author = "Unknown"
+                    genre = "General"
+                else:
+                    continue
+
                 books.append({
                     "title": title,
                     "category": category,
@@ -109,6 +119,8 @@ def search():
         if (keyword in book["title"].lower()
             or
             keyword in book["category"].lower()
+            or
+            keyword in book["author"].lower()
             or
             keyword in book["genre"].lower()
             or
@@ -853,11 +865,12 @@ def add_book():
     if request.method == "POST":
         title = request.form["title"].strip()
         category = request.form["category"].strip()
+        author = request.form["author"].strip()
         genre = request.form["genre"].strip()
         summary = request.form["summary"].strip()
 
         with open("book.txt", "a") as file:
-            file.write(f"\n{title}|{category}|{genre}|{summary}")
+            file.write(f"\n{title}|{category}|{author}|{genre}|{summary}")
 
         return render_template("add_book.html", success=True)
 
