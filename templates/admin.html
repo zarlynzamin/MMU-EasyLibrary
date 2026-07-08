@@ -44,28 +44,56 @@
     </div>
         <div class="admin-card">
         
-            <h2>Add New Book</h2>
+           <h2>Add New Book</h2>
 
-            <form action="{{ url_for('add_book') }}" method="post">
-                <input type="text" name="title" placeholder="Book Title" required>
+<form action="{{ url_for('add_book') }}" method="post">
 
-                <select name="category" required>
-                    <option value="Science">Science</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="History">History</option>
-                    <option value="Textbook">Textbook</option>
-                </select>
-                <textarea name="author" placeholder="Author Name" required></textarea>
-                <select name="genre" required>
-                    <option value="Horror">Horror</option>
-                    <option value="Mystery">Mystery</option>
-                    <option value="Romance">Romance</option>
-                    <option value="Thriller">Thriller</option>
-                </select>
-                <textarea name="summary" placeholder="Book Summary" required></textarea>
+    <input type="text" name="title" placeholder="Book Title" required>
 
-                <button type="submit" class="btn">Add Book</button>
-            </form>
+    <select name="category" id="category" onchange="toggleGenre()" required>
+        <option value="Science">Science</option>
+        <option value="Fiction">Fiction</option>
+        <option value="History">History</option>
+        <option value="Textbook">Textbook</option>
+    </select>
+
+    <textarea name="author" placeholder="Author Name" required></textarea>
+
+    <div id="genreDiv" style="display: none;">
+        <select name="genre" id="genre">
+            <option value="">Select Genre</option>
+            <option value="Horror">Horror</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Romance">Romance</option>
+            <option value="Thriller">Thriller</option>
+        </select>
+    </div>
+
+    <textarea name="summary" placeholder="Book Summary" required></textarea>
+
+    <button type="submit" class="btn">Add Book</button>
+
+</form>
+
+<script>
+function toggleGenre() {
+    const category = document.getElementById("category").value;
+    const genreDiv = document.getElementById("genreDiv");
+    const genre = document.getElementById("genre");
+
+    if (category === "Fiction") {
+        genreDiv.style.display = "block";
+        genre.required = true;
+    } else {
+        genreDiv.style.display = "none";
+        genre.required = false;
+        genre.value = "";
+    }
+}
+
+// Runs when the page loads
+window.onload = toggleGenre;
+</script>
        
         </div>
         <div class="admin-card">

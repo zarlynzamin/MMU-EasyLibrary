@@ -866,8 +866,12 @@ def add_book():
         title = request.form["title"].strip()
         category = request.form["category"].strip()
         author = request.form["author"].strip()
-        genre = request.form["genre"].strip()
         summary = request.form["summary"].strip()
+
+        if category.lower() == "fiction":
+            genre = request.form.get("genre", "").strip()
+        else:
+            genre = ""
 
         with open("book.txt", "a") as file:
             file.write(f"\n{title}|{category}|{author}|{genre}|{summary}")
